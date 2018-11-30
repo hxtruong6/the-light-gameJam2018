@@ -10,6 +10,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     [SerializeField] private GameObject humanPrefab;
     [HideInInspector] public List<GameObject> human = new List<GameObject>();
+    [SerializeField] private Transform forwardPosition;
     private Rigidbody2D rb2d;
     Vector3 moveVelocity;
     private bool isDead;
@@ -26,7 +27,7 @@ public class PlayerBehaviour : MonoBehaviour
         var humInstantiate = Instantiate(humanPrefab, Vector3.zero, Quaternion.identity);
         humInstantiate.transform.parent = this.transform;
         human.Add(humInstantiate);
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < 2; i++)
         {
             AddingHuman();
         }
@@ -64,10 +65,13 @@ public class PlayerBehaviour : MonoBehaviour
     {
         float x = human[human.Count - 1].transform.position.x;
         float y = human[human.Count - 1].transform.position.y;
-        float addingRadius = human[human.Count - 1].GetComponent<HumanBehaviour>().circleColliderRadius;
-        print("forward: " + human[human.Count - 1].transform.forward);
-        print("pos: " + human[human.Count - 1].transform.position);
-        Vector3 nextPosHuman = -human[human.Count - 1].transform.forward + new Vector3(addingRadius, addingRadius, 0);
+        float distance = human[human.Count - 1].GetComponent<HumanBehaviour>().circleColliderRadius * 2;
+
+        Vector3 directVec = forwardPosition.position - human[human.Count - 1].transform.position;
+        directVec = -directVec.normalized * distance;
+
+
+        Vector3 nextPosHuman = new Vector3(x,y,0) + directVec;
         var humanInstantiate = Instantiate(humanPrefab, nextPosHuman, Quaternion.identity);
         humanInstantiate.transform.parent = this.transform;
         human.Add(humanInstantiate);
