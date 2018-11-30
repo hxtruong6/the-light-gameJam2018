@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-//using SimpleInputNamespace;
+
 public class PlayerBehaviour : MonoBehaviour
 {
 
     public float speed;
     public GameObject flashlight;
     public bool lightOn;
+    public int maxBattery;
+    public int maxFear;
+    public int humanNotFear;
 
     [SerializeField] private GameObject humanPrefab;
     [HideInInspector] public List<GameObject> human = new List<GameObject>();
@@ -15,14 +18,11 @@ public class PlayerBehaviour : MonoBehaviour
     Vector3 moveVelocity;
     private bool isDead;
 
-    //protected Joystick joystick;
-    protected SimpleInput simpleInput;
 
     // Use this for initialization
     void Start()
     {
         rb2d = this.gameObject.GetComponent<Rigidbody2D>();
-         simpleInput = gameObject.GetComponent<SimpleInput>();
 
         var humInstantiate = Instantiate(humanPrefab, Vector3.zero, Quaternion.identity);
         humInstantiate.transform.parent = this.transform;
@@ -38,7 +38,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (isDead) return;
 
-        Vector3 moveInput = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
+        Vector3 moveInput = new Vector3(SimpleInput.GetAxis("Horizontal") + Input.GetAxis("Horizontal"), SimpleInput.GetAxis("Vertical") + Input.GetAxis("Vertical"), 0);
         moveVelocity = moveInput * speed * Time.deltaTime;
         //rb2d.MovePosition(rb2d.transform.position + moveVelocity);
         rb2d.transform.position += moveVelocity;
@@ -48,7 +48,7 @@ public class PlayerBehaviour : MonoBehaviour
             float rot_z = Mathf.Atan2(moveInput.normalized.y, moveInput.normalized.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || SimpleInput.GetButtonDown("Light"))
         {
             lightOn = !lightOn;
             FlashLight(lightOn);
