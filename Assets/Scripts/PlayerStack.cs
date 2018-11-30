@@ -9,7 +9,12 @@ public class PlayerStack : MonoBehaviour {
     public GameObject player;
     static PlayerStack playerStack;
     private int humanCount;
-    private int currentFear;
+    private float currentFear;
+    private float currentBattery;
+    [SerializeField] private float timerFear;
+    [SerializeField] private float timerBattery;
+    [SerializeField] private int damageFear = 6;
+    [SerializeField] private int damageBattery = 2;
 
     private void Awake()
     {
@@ -18,22 +23,43 @@ public class PlayerStack : MonoBehaviour {
     // Use this for initialization
     void Start () {
         currentFear = 0;
+        currentBattery = player.GetComponent<PlayerBehaviour>().maxBattery;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        batteryValue.fillAmount = currentBattery / player.GetComponent<PlayerBehaviour>().maxBattery;
+    }
 
-    static public void PlayerFear(int humanNotFear, int maxFear)
+    public static void PlayerFear(int numberHumanNotFear, int maxFear)
     {
         playerStack.humanCount = playerStack.player.GetComponent<PlayerBehaviour>().human.Count;
-        if (playerStack.humanCount < humanNotFear)
+        if (playerStack.humanCount < numberHumanNotFear)
         {
-            if (playerStack.currentFear < maxFear)
+            if (playerStack.currentFear < maxFear && playerStack.currentFear >= 0 && playerStack.humanCount < numberHumanNotFear)
             {
-
+                if (playerStack.timerFear <= 0)
+                {
+                    playerStack.currentFear += playerStack.damageFear - playerStack.humanCount;
+                    playerStack.fearValue.fillAmount = playerStack.currentFear / maxFear;
+                    playerStack.timerFear = 1f;
+                }
+                else playerStack.timerFear -= Time.deltaTime;
             }
+        }
+    }
+
+    public static void PlayerBattery(int maxBattery)
+    {
+        if (playerStack.currentBattery >= 0 && playerStack.currentBattery <= maxBattery)
+        {
+            if (playerStack.timerBattery <= 0)
+            {
+                playerStack.currentBattery -= playerStack.damageBattery;
+                
+                playerStack.timerBattery = 2f;
+            }
+            else playerStack.timerBattery -= Time.deltaTime;
         }
     }
 }

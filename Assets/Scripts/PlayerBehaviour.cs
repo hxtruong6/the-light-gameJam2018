@@ -9,7 +9,7 @@ public class PlayerBehaviour : MonoBehaviour
     public bool lightOn;
     public int maxBattery;
     public int maxFear;
-    public int humanNotFear;
+    public int numberHumanNotFear;
 
     [SerializeField] private GameObject humanPrefab;
     [HideInInspector] public List<GameObject> human = new List<GameObject>();
@@ -53,12 +53,20 @@ public class PlayerBehaviour : MonoBehaviour
             lightOn = !lightOn;
             FlashLight(lightOn);
         }
+        PlayerStack.PlayerFear(numberHumanNotFear, maxFear);
     }
 
     private void FlashLight(bool lightOn)
     {
-        if (lightOn) flashlight.gameObject.SetActive(true);
-        else flashlight.gameObject.SetActive(false);
+        if (lightOn)
+        {
+            flashlight.gameObject.SetActive(true);
+            PlayerStack.PlayerBattery(maxBattery);
+        }
+        else
+        {
+            flashlight.gameObject.SetActive(false);
+        }
     }
 
     public void AddingHuman()
