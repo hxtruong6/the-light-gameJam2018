@@ -27,7 +27,7 @@ public class PlayerBehaviour : MonoBehaviour
         var humInstantiate = Instantiate(humanPrefab, Vector3.zero, Quaternion.identity);
         humInstantiate.transform.parent = this.transform;
         human.Add(humInstantiate);
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 10; i++)
         {
             AddingHuman();
         }
@@ -43,8 +43,17 @@ public class PlayerBehaviour : MonoBehaviour
         //rb2d.MovePosition(rb2d.transform.position + moveVelocity);
         rb2d.transform.position += moveVelocity;
 
+        // set the first human
+      
+
         if (moveVelocity != Vector3.zero)
         {
+            human[0].GetComponent<HumanBehaviour>().transform.position = rb2d.transform.position;
+            for (int i = 1; i < human.Count; i++)
+            {
+                human[i].GetComponent<HumanBehaviour>().Arriving(human[i-1].transform.position);
+            }
+
             float rot_z = Mathf.Atan2(moveInput.normalized.y, moveInput.normalized.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
         }
@@ -71,7 +80,7 @@ public class PlayerBehaviour : MonoBehaviour
         directVec = -directVec.normalized * distance;
 
 
-        Vector3 nextPosHuman = new Vector3(x,y,0) + directVec;
+        Vector3 nextPosHuman = new Vector3(x, y, 0) + directVec;
         var humanInstantiate = Instantiate(humanPrefab, nextPosHuman, Quaternion.identity);
         humanInstantiate.transform.parent = this.transform;
         human.Add(humanInstantiate);
