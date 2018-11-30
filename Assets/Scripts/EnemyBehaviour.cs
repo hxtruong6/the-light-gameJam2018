@@ -3,34 +3,36 @@
 public class EnemyBehaviour : MonoBehaviour
 {
 
-    [SerializeField] private GameObject player;
+    private GameObject player;
 
     [SerializeField] private float speed;
+
+    [SerializeField] private float circleColliderRadius;
     // Use this for initialization
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").gameObject;
+        gameObject.GetComponent<CircleCollider2D>().radius = circleColliderRadius;
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        var playerPos = player.transform;
-        // TODO: find the nearest human
-        transform.position = Vector2.MoveTowards(transform.position, playerPos.position, speed * Time.deltaTime);
+        // Find the nearest human
+        var closestPlayer = FindClosestPlayer();
+        transform.position = Vector2.MoveTowards(transform.position, closestPlayer.transform.position, speed * Time.deltaTime);
     }
 
     public GameObject FindClosestPlayer()
     {
-        GameObject[] gos;
-        gos = GameObject.FindGameObjectsWithTag("Human");
-        // TODO: get list gameobjects from Player
+        var human = player.GetComponent<PlayerBehaviour>().human;
         GameObject closest = null;
         float distance = Mathf.Infinity;
         Vector3 position = transform.position;
-        foreach (GameObject go in gos)
+        for (int i = 0; i < human.Count; i++)
         {
+            var go = human[i];
             Vector3 diff = go.transform.position - position;
             float curDistance = diff.sqrMagnitude;
             if (curDistance < distance)
