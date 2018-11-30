@@ -1,33 +1,42 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//using SimpleInputNamespace;
 public class PlayerBehaviour : MonoBehaviour {
     public float speed;
     public GameObject flashlight;
     public bool lightOn;
     public List<GameObject> human;
     private Rigidbody2D rb2d;
+    Vector3 moveVelocity;
     private bool isDead;
+
+    //protected Joystick joystick;
+    protected SimpleInput simpleInput;
     
 
 	// Use this for initialization
 	void Start () {
-        rb2d = this.gameObject.GetComponent<Rigidbody2D>();
+        rb2d = gameObject.GetComponent<Rigidbody2D>();
+        //joystick = gameObject.GetComponent<Joystick>();
+        simpleInput = gameObject.GetComponent<SimpleInput>();
 	}
 
     // Update is called once per frame
     void Update()
     {
         if (isDead) return;
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
 
-        Vector3 tempVect = new Vector3(h, v, 0);
-        tempVect = tempVect.normalized * speed * Time.deltaTime;
-        rb2d.MovePosition(rb2d.transform.position + tempVect);
-        //rb2d.rotation = Quaternion.Lerp(rb2d.transform.rotation + tempVect);
-        float angle = Mathf.Atan2(tempVect.y, tempVect.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        Vector3 moveInput = new Vector3( Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
+        moveVelocity = moveInput * speed *Time.deltaTime;
+        //rb2d.MovePosition(rb2d.transform.position + moveVelocity);
+        rb2d.transform.position += moveVelocity;
+
+        if (moveVelocity != Vector3.zero)
+        {
+            float rot_z = Mathf.Atan2(moveInput.normalized.y, moveInput.normalized.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
+        }
         if (Input.GetKeyDown(KeyCode.Space)) {
             lightOn = !lightOn;
             FlashLight(lightOn);
