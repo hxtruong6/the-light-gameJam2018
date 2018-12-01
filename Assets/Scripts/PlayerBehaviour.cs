@@ -24,10 +24,10 @@ public class PlayerBehaviour : MonoBehaviour
 
         var humInstantiate = Instantiate(humanPrefab, transform.position, transform.rotation, transform);
         humans.Add(humInstantiate);
-        for (int i = 0; i < 10; i++)
-        {
-            AddNewFellows();
-        }
+        //for (int i = 0; i < 10; i++)
+        //{
+        //    AddNewFellows();
+        //}
     }
 
     private void AddNewFellows()
