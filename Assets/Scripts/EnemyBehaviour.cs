@@ -14,7 +14,7 @@ public class EnemyBehaviour : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").gameObject;
+        player = GameObject.FindObjectOfType<PlayerBehaviour>().gameObject;
         gameObject.GetComponent<CircleCollider2D>().radius = circleColliderRadius;
     }
 
@@ -35,11 +35,11 @@ public class EnemyBehaviour : MonoBehaviour
     {
         //var playerBehaviour = player.GetComponent<PlayerBehaviour>();
         //List<GameObject> human = new List<GameObject>();
-        if (!player.GetComponent<PlayerBehaviour>())
-        {
-            print("No humans get");
-            return null;
-        }
+        //if (!player.GetComponent<PlayerBehaviour>())
+        //{
+        //    print("No humans get");
+        //    return null;
+        //}
         humans = player.GetComponent<PlayerBehaviour>().humans;
         GameObject closest = null;
         float distance = Mathf.Infinity;
