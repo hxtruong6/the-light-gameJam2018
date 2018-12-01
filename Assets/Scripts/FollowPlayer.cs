@@ -11,6 +11,8 @@ public class FollowPlayer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (GameManager.instance.IsGameOver())
+            return;
         transform.position = new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z);
 	}
 }

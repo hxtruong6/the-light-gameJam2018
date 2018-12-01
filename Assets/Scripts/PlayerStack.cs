@@ -33,6 +33,7 @@ public class PlayerStack : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.instance.IsGameOver()) return;
         LifeFear();
     }
 

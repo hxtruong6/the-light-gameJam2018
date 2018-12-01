@@ -18,7 +18,8 @@ public class FlashLight : MonoBehaviour {
         currentBattery = maxBattery;
     }
 	
-	void Update () {      
+	void Update () {
+        if (GameManager.instance.IsGameOver()) return;
         batteryValue.fillAmount = currentBattery / maxBattery;
         LifeBattery();
     }

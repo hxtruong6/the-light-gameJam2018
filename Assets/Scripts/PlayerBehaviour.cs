@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour
@@ -12,22 +11,24 @@ public class PlayerBehaviour : MonoBehaviour
 
     [SerializeField] public Transform forwardPosition;
     private Rigidbody2D rb2d;
-    private bool isDead;
     private FlashLight flashLight;
-    private PlayerParty playerParty;
+    private PlayerParty playerParty ;
+
     // Use this for initialization
     private void Start()
     {
         rb2d = this.gameObject.GetComponent<Rigidbody2D>();
         flashLight = GetComponent<FlashLight>();
         playerParty = GetComponent<PlayerParty>();
+
     }
+
+  
 
     // Update is called once per frame
     private void Update()
     {
-        if (isDead) return;
-
+        if (GameManager.instance.IsGameOver()) return;
         UpdateMovement();
         UpdateFellowMovement();
 
@@ -39,14 +40,11 @@ public class PlayerBehaviour : MonoBehaviour
             }
 
         }
-        PlayerStack.instance.PlayerFear(numberHumanNotFear, maxFear);
-       
-        
         FlashLightToggle(lightOn);
         PlayerStack.instance.PlayerFear(numberHumanNotFear, maxFear);
         if (PlayerStack.LifeFear())
         {
-            Dead();
+            GameManager.instance.EndGame();
         }
 
         if(lightOn)
@@ -73,11 +71,12 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void UpdateFellowMovement()
     {
+        if (playerParty.humans.Count == 0) return;
         for (int i = 0; i < playerParty.humans.Count - 1; i++)
         {
             playerParty.humans[i + 1].MoveToward(playerParty.humans[i].transform.position);
         }
-   }
+    }
 
     private void FlashLightToggle(bool lightOn)
     {
@@ -89,15 +88,15 @@ public class PlayerBehaviour : MonoBehaviour
         {
             flashLightObject.gameObject.SetActive(false);
             List<GameObject> enemies = EnemyManager.instance.listEnemy;
-            for (int i = 0; i < enemies.Count; i++)
+            if(enemies.Count > 0)
             {
-                enemies[i].GetComponent<SpriteRenderer>().enabled = false;
+                for (int i = 0; i < enemies.Count; i++)
+                {
+                    enemies[i].GetComponent<SpriteRenderer>().enabled = false;
+                }
             }
         }
     }
 
-    private void Dead()
-    {
-        isDead = true;
-    }
+
 }

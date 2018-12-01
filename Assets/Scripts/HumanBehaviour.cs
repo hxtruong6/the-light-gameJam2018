@@ -21,4 +21,22 @@ public class HumanBehaviour : MonoBehaviour
             transform.position = Vector3.SmoothDamp(transform.position, target, ref smoothVelocity, 0.5f);
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        // TODO: Cant not collider
+        //print("Other: " + other.name);
+        var enemy = other.gameObject.GetComponent<EnemyBehaviour>();
+        if (enemy)
+        {
+            //GameObject.FindObjectOfType<PlayerBehaviour>().CutMembers(this);
+            //FindObjectOfType<PlayerBehaviour>().humans.Remove(this);
+            FindObjectOfType<PlayerParty>().RemoveLastMember();
+            EnemyManager.instance.listEnemy.Remove(enemy.gameObject);
+            Destroy(enemy.gameObject);
+
+            //Destroy(this.gameObject);
+        }
+
+    }
 }

@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemInside: {fileID: 0}
-  fadeDuration: 5
+  fadeDuration: 100000
   minSpawnObjectTime: 2.5
   maxSpawnObjectTime: 5
   spawnObjects:

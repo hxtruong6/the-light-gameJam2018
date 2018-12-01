@@ -16,7 +16,7 @@ public class ContactPlayer : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        print(collision.gameObject);
+        //print(collision.gameObject);
         if (collision.GetComponent<PlayerBehaviour>())
         {
             var player = collision.GetComponent<PlayerBehaviour>().gameObject;

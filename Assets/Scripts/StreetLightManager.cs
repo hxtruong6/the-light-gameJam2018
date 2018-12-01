@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class StreetLightManager : MonoBehaviour
 {
-
+    public int maxLightNumber;
     [SerializeField] private GameObject streetLight;
     [SerializeField] private float radius = 5f;
 
@@ -16,12 +16,15 @@ public class StreetLightManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        StreetLightSpawn();
+        StreetLightSpawn();
+        StreetLightSpawn();
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if (timeCount >= 5.0f)
         {
             StreetLightSpawn();
@@ -32,25 +35,22 @@ public class StreetLightManager : MonoBehaviour
 
     void StreetLightSpawn()
     {
+        StreetLight[] lights = GameObject.FindObjectsOfType<StreetLight>();
+        if (lights.Length >= maxLightNumber)
+            return;
         Vector3 newPos = Vector3.zero;
-        bool validPosition = false;
-        while (!validPosition)
+        newPos = new Vector3(Random.Range(-radius, radius), Random.Range(-radius, radius), 0);
+        while (!isAvailblePosition(newPos))
         {
             newPos = new Vector3(Random.Range(-radius, radius), Random.Range(-radius, radius), 0);
-            validPosition = true;
-            humans = player.GetComponent<PlayerParty>().humans;
-
-            // Check not collision with human list
-            for (int i = 0; i < humans.Count; i++)
-            {
-                if (Vector3.Distance(humans[i].transform.position, newPos) <= thresholdDistanceObstacle)
-                {
-                    validPosition = false;
-                    break;
-                }
-            }
         }
         Instantiate(streetLight, newPos, Quaternion.identity);
+    }
+    private bool isAvailblePosition(Vector3 pitvotPos)
+    {
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(pitvotPos.x, pitvotPos.y),
+            streetLight.GetComponent<StreetLight>().circleColliderRadius + thresholdDistanceObstacle);
+        return hitColliders.Length == 0;
     }
 
 

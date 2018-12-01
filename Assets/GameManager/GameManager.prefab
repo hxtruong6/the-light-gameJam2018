@@ -55,6 +55,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 1267189272405868, guid: 485e7502472ea2246aa2b8621ef1feb9, type: 2}
   radius: 10
+  listEnemy: []
+  thresholdDistanceObstacle: 3
 --- !u!114 &114346126160847618
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -70,7 +72,7 @@ MonoBehaviour:
     type: 2}
   radius: 5
   player: {fileID: 0}
-  thresholdDistanceObstacle: 1
+  thresholdDistanceObstacle: 4
 --- !u!114 &114578822192045312
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -82,3 +84,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e727d1c30201314880c864db9626743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasGame: {fileID: 0}
+  canvasEnd: {fileID: 0}
