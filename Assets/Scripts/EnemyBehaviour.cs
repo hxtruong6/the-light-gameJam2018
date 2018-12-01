@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class EnemyBehaviour : MonoBehaviour
 {
@@ -21,12 +22,23 @@ public class EnemyBehaviour : MonoBehaviour
     {
         // Find the nearest human
         var closestPlayer = FindClosestPlayer();
-        transform.position = Vector2.MoveTowards(transform.position, closestPlayer.transform.position, speed * Time.deltaTime);
+        if (closestPlayer)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, closestPlayer.transform.position,
+                speed * Time.deltaTime);
+        }
     }
 
     public GameObject FindClosestPlayer()
     {
-        var human = player.GetComponent<PlayerBehaviour>().human;
+        var playerBehaviour = player.GetComponent<PlayerBehaviour>();
+        List<GameObject> human = new List<GameObject>();
+        if (!playerBehaviour)
+        {
+            human = player.GetComponent<PlayerBehaviour>().human;
+            print("No human get");
+            return null;
+        }
         GameObject closest = null;
         float distance = Mathf.Infinity;
         Vector3 position = transform.position;

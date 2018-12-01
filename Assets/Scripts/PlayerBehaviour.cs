@@ -30,7 +30,7 @@ public class PlayerBehaviour : MonoBehaviour
         var humInstantiate = Instantiate(humanPrefab, Vector3.zero, Quaternion.identity);
         humInstantiate.transform.parent = this.transform;
         human.Add(humInstantiate);
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 5; i++)
         {
             AddingHuman();
         }
