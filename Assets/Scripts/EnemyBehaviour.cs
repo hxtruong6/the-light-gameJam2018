@@ -9,6 +9,8 @@ public class EnemyBehaviour : MonoBehaviour
     [SerializeField] private float speed;
 
     [SerializeField] private float circleColliderRadius;
+
+    private List<HumanBehaviour> humans = new List<HumanBehaviour>();
     // Use this for initialization
     void Start()
     {
@@ -31,20 +33,20 @@ public class EnemyBehaviour : MonoBehaviour
 
     public GameObject FindClosestPlayer()
     {
-        var playerBehaviour = player.GetComponent<PlayerBehaviour>();
-        List<GameObject> human = new List<GameObject>();
-        if (!playerBehaviour)
+        //var playerBehaviour = player.GetComponent<PlayerBehaviour>();
+        //List<GameObject> human = new List<GameObject>();
+        if (!player.GetComponent<PlayerBehaviour>())
         {
-            human = player.GetComponent<PlayerBehaviour>().human;
-            print("No human get");
+            print("No humans get");
             return null;
         }
+        humans = player.GetComponent<PlayerBehaviour>().humans;
         GameObject closest = null;
         float distance = Mathf.Infinity;
         Vector3 position = transform.position;
-        for (int i = 0; i < human.Count; i++)
+        for (int i = 0; i < humans.Count; i++)
         {
-            var go = human[i];
+            var go = humans[i].gameObject;
             Vector3 diff = go.transform.position - position;
             float curDistance = diff.sqrMagnitude;
             if (curDistance < distance)
