@@ -20,7 +20,7 @@ public class PlayerBehaviour : MonoBehaviour
     Vector3 moveVelocity;
     private bool isDead;
     private bool isFollowing;
-
+    private float movingTime = 0;
 
     // Use this for initialization
     void Start()
@@ -53,14 +53,14 @@ public class PlayerBehaviour : MonoBehaviour
 
         if (moveVelocity != Vector3.zero)
         {
-
-            if (!isFollowing &&
-                Vector3.Distance(human[0].transform.position, transform.position) >= thresholdDistance)
-            {
-                var startPosition = human[0].GetComponent<HumanBehaviour>().transform.position;
-                human[0].GetComponent<HumanBehaviour>().transform.position = transform.position;
-                HumanFollowing(startPosition);
-            }
+            //movingTime += Time.deltaTime;
+            //if (!isFollowing && movingTime >2f)
+            //{
+            //    movingTime = 0;
+            //    var startPosition = human[0].GetComponent<HumanBehaviour>().transform.position;
+            //    human[0].GetComponent<HumanBehaviour>().transform.position = transform.position;
+            //    HumanFollowing(startPosition);
+            //}
             float rot_z = Mathf.Atan2(moveInput.normalized.y, moveInput.normalized.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
         }
@@ -80,16 +80,11 @@ public class PlayerBehaviour : MonoBehaviour
         Vector3 tempPosition = Vector3.zero;
         for (int i = 1; i < human.Count; i++)
         {
-            if (Vector3.Distance(human[i].transform.position, previousPosition) >= thresholdDistance)
+            //if (Vector3.Distance(human[i].transform.position, previousPosition) >= thresholdDistance)
             {
                 tempPosition = human[i].transform.position;
                 human[i].GetComponent<HumanBehaviour>().Arriving(previousPosition);
                 previousPosition = tempPosition;
-            }
-            else
-            {
-                 break;
-                
             }
         }
         isFollowing = false;
