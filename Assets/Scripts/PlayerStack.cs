@@ -33,7 +33,7 @@ public class PlayerStack : MonoBehaviour {
 
     public static void PlayerFear(int numberHumanNotFear, int maxFear)
     {
-        playerStack.humanCount = playerStack.player.GetComponent<PlayerBehaviour>().human.Count;
+        playerStack.humanCount = playerStack.player.GetComponent<PlayerBehaviour>().humans.Count;
         if (playerStack.humanCount < numberHumanNotFear)
         {
             if (playerStack.currentFear < maxFear && playerStack.currentFear >= 0 && playerStack.humanCount < numberHumanNotFear)

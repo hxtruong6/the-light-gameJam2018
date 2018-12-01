@@ -26,13 +26,13 @@ public class EnemyBehaviour : MonoBehaviour
 
     public GameObject FindClosestPlayer()
     {
-        var human = player.GetComponent<PlayerBehaviour>().human;
+        var human = player.GetComponent<PlayerBehaviour>().humans;
         GameObject closest = null;
         float distance = Mathf.Infinity;
         Vector3 position = transform.position;
         for (int i = 0; i < human.Count; i++)
         {
-            var go = human[i];
+            var go = human[i].gameObject;
             Vector3 diff = go.transform.position - position;
             float curDistance = diff.sqrMagnitude;
             if (curDistance < distance)

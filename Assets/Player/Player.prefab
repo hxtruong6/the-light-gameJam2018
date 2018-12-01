@@ -44,7 +44,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1139158799293006
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,7 +193,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1098772112007428}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2, y: 0, z: 0}
+  m_LocalPosition: {x: 2.16, y: 0.03, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4865844514850350}
@@ -370,9 +370,8 @@ MonoBehaviour:
   maxBattery: 50
   maxFear: 50
   numberHumanNotFear: 10
-  humanPrefab: {fileID: 1499572717295356, guid: 807cc1e5f743a6f4c9e5994dba72dbe1,
+  humanPrefab: {fileID: 114597624383299206, guid: 807cc1e5f743a6f4c9e5994dba72dbe1,
     type: 2}
-  human: []
   forwardPosition: {fileID: 4571413214621980}
 --- !u!198 &198057479140127624
 ParticleSystem:

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour
 {
-
     public float speed;
     public GameObject flashlight;
     public bool lightOn;
@@ -12,58 +11,47 @@ public class PlayerBehaviour : MonoBehaviour
     public int maxFear;
     public int numberHumanNotFear;
 
-    [SerializeField] private GameObject humanPrefab;
-    [HideInInspector] public List<GameObject> human = new List<GameObject>();
+    [SerializeField] private HumanBehaviour humanPrefab;
+    [System.NonSerialized] public List<HumanBehaviour> humans = new List<HumanBehaviour>();
     [SerializeField] private Transform forwardPosition;
-    [SerializeField] private float thresholdDistance = 0.5f;
     private Rigidbody2D rb2d;
-    Vector3 moveVelocity;
     private bool isDead;
-    private bool isFollowing;
-
 
     // Use this for initialization
-    void Start()
+    private void Start()
     {
         rb2d = this.gameObject.GetComponent<Rigidbody2D>();
 
-        var humInstantiate = Instantiate(humanPrefab, Vector3.zero, Quaternion.identity);
-        humInstantiate.transform.parent = this.transform;
-        human.Add(humInstantiate);
+        var humInstantiate = Instantiate(humanPrefab, transform.position, transform.rotation, transform);
+        humans.Add(humInstantiate);
         for (int i = 0; i < 10; i++)
         {
-            AddingHuman();
+            AddNewFellows();
         }
+    }
 
-        isFollowing = false;
+    private void AddNewFellows()
+    {
+        float x = humans[humans.Count - 1].transform.position.x;
+        float y = humans[humans.Count - 1].transform.position.y;
+        float distance = humans[humans.Count - 1].circleColliderRadius * 2;
+
+        Vector3 directVec = forwardPosition.position - humans[humans.Count - 1].transform.position;
+        directVec = -directVec.normalized * distance;
+
+        Vector3 nextPosHuman = new Vector3(x, y, 0) + directVec;
+        var humanInstantiate = Instantiate(humanPrefab, nextPosHuman, Quaternion.identity);
+        humans.Add(humanInstantiate);
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (isDead) return;
 
-        Vector3 moveInput = new Vector3(SimpleInput.GetAxis("Horizontal") + Input.GetAxis("Horizontal"), SimpleInput.GetAxis("Vertical") + Input.GetAxis("Vertical"), 0);
-        moveVelocity = moveInput * speed * Time.deltaTime;
-        //rb2d.MovePosition(rb2d.transform.position + moveVelocity);
-        rb2d.transform.position += moveVelocity;
+        UpdateMovement();
+        UpdateFellowMovement();
 
-        // set the first human
-
-
-        if (moveVelocity != Vector3.zero)
-        {
-
-            if (!isFollowing &&
-                Vector3.Distance(human[0].transform.position, transform.position) >= thresholdDistance)
-            {
-                var startPosition = human[0].GetComponent<HumanBehaviour>().transform.position;
-                human[0].GetComponent<HumanBehaviour>().transform.position = transform.position;
-                HumanFollowing(startPosition);
-            }
-            float rot_z = Mathf.Atan2(moveInput.normalized.y, moveInput.normalized.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
-        }
         if (Input.GetKeyDown(KeyCode.Space) || SimpleInput.GetButtonDown("Light"))
         {
             lightOn = !lightOn;
@@ -73,39 +61,28 @@ public class PlayerBehaviour : MonoBehaviour
         FlashLight(lightOn);
     }
 
-    void HumanFollowing(Vector3 startPosition)
+    private void UpdateMovement()
     {
-        isFollowing = true;
-        Vector3 previousPosition = startPosition;
-        Vector3 tempPosition = Vector3.zero;
-        for (int i = 1; i < human.Count; i++)
+        var xDir = SimpleInput.GetAxis("Horizontal") + Input.GetAxis("Horizontal");
+        var yDir = SimpleInput.GetAxis("Vertical") + Input.GetAxis("Vertical");
+        Vector3 moveInput = new Vector3(xDir, yDir, 0).normalized;
+        var moveVelocity = moveInput * speed * Time.deltaTime;
+
+        rb2d.transform.position += moveVelocity;
+
+        if (moveVelocity != Vector3.zero)
         {
-            if (Vector3.Distance(human[i].transform.position, previousPosition) >= thresholdDistance)
-            {
-                tempPosition = human[i].transform.position;
-                human[i].GetComponent<HumanBehaviour>().Arriving(previousPosition);
-                previousPosition = tempPosition;
-            }
-            else
-            {
-                 break;
-                
-            }
+            float rot_z = Mathf.Atan2(moveInput.normalized.y, moveInput.normalized.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
         }
-        isFollowing = false;
     }
 
-    private IEnumerator FollowingPlayer()
+    private void UpdateFellowMovement()
     {
-        isFollowing = true;
-        for (int i = 1; i < human.Count; i++)
+        for (int i = 0; i < humans.Count - 1; i++)
         {
-            yield return new WaitUntil(() => Vector3.Distance(human[i].transform.position, human[i - 1].transform.position) >= thresholdDistance);
-            human[i].GetComponent<HumanBehaviour>().Arriving(human[i - 1].transform.position);
-
+            humans[i + 1].MoveToward(humans[i].transform.position);
         }
-
-        isFollowing = false;
     }
 
     private void FlashLight(bool lightOn)
@@ -120,21 +97,4 @@ public class PlayerBehaviour : MonoBehaviour
             flashlight.gameObject.SetActive(false);
         }
     }
-
-    public void AddingHuman()
-    {
-        float x = human[human.Count - 1].transform.position.x;
-        float y = human[human.Count - 1].transform.position.y;
-        float distance = human[human.Count - 1].GetComponent<HumanBehaviour>().circleColliderRadius * 2;
-
-        Vector3 directVec = forwardPosition.position - human[human.Count - 1].transform.position;
-        directVec = -directVec.normalized * distance;
-
-
-        Vector3 nextPosHuman = new Vector3(x, y, 0) + directVec;
-        var humanInstantiate = Instantiate(humanPrefab, nextPosHuman, Quaternion.identity);
-        humanInstantiate.transform.parent = this.transform;
-        human.Add(humanInstantiate);
-    }
-
 }
