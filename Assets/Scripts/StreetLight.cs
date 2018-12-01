@@ -7,25 +7,24 @@ public class StreetLight : MonoBehaviour
     public GameObject itemInside;
 
     [SerializeField] private float reduceFactor;
-    [SerializeField] private float circleColliderRadius;
+    [SerializeField] public float circleColliderRadius;
     private bool isInside;
     private Vector3 currentScale;
-    public float duration = 5.0f;
+    public float duration = 10.0f;
     private float startTime;
     private SpriteRenderer sprite;
     void Start()
     {
-        startTime = Time.time;
         sprite = GetComponent<SpriteRenderer>();
-
         gameObject.GetComponent<CircleCollider2D>().radius = circleColliderRadius;
         currentScale = transform.localScale;
     }
 
     void Fading()
     {
-        float t = (Time.time - startTime) / duration;
-        sprite.color = new Color(1f, 1f, 1f, 1 - Mathf.SmoothStep(0, 1, t));
+        if (sprite.color.a < 0.3f) return;
+        float t = 0.5f*(Time.time - startTime) / duration;
+        sprite.color = new Color(1f, 1f, 1f, sprite.color.a - Mathf.SmoothStep(0, 1, t));
     }
 
 
@@ -34,6 +33,7 @@ public class StreetLight : MonoBehaviour
     {
         if (other.GetComponent<PlayerBehaviour>())
         {
+            startTime = Time.time;
             isInside = true;
             StartCoroutine(ScaleDown());
         }
@@ -44,6 +44,7 @@ public class StreetLight : MonoBehaviour
         if (other.GetComponent<PlayerBehaviour>())
         {
             isInside = false;
+            StopCoroutine(ScaleDown());
         }
     }
 
@@ -58,7 +59,7 @@ public class StreetLight : MonoBehaviour
             Fading();
             yield return null;
         }
-        if (transform.localScale.x <= 0)
+        if (transform.localScale.x < 0.5f)
         {
             Destroy(gameObject);
         }

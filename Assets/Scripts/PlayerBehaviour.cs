@@ -23,11 +23,12 @@ public class PlayerBehaviour : MonoBehaviour
         rb2d = this.gameObject.GetComponent<Rigidbody2D>();
 
         var humInstantiate = Instantiate(humanPrefab, transform.position, transform.rotation, transform);
+        humInstantiate.GetComponent<SpriteRenderer>().enabled = false;
         humans.Add(humInstantiate);
-        //for (int i = 0; i < 4; i++)
-        //{
-        //    AddNewFellows();
-        //}
+        for (int i = 0; i < 5; i++)
+        {
+           AddNewFellows();
+        }
     }
 
     private void AddNewFellows()

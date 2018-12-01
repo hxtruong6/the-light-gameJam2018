@@ -106,9 +106,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemInside: {fileID: 0}
-  reduceFactor: 0
+  reduceFactor: 0.05
   circleColliderRadius: 0.5
-  duration: 20
+  duration: 30
 --- !u!212 &212843383109274192
 SpriteRenderer:
   m_ObjectHideFlags: 1

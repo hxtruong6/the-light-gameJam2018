@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class EnemyBehaviour : MonoBehaviour
 {
@@ -11,6 +11,7 @@ public class EnemyBehaviour : MonoBehaviour
     [SerializeField] private float circleColliderRadius;
 
     private List<HumanBehaviour> humans = new List<HumanBehaviour>();
+
     // Use this for initialization
     void Start()
     {
@@ -22,6 +23,9 @@ public class EnemyBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // TODO: need to balance game at here
+        // ...
+
         // Find the nearest human
         var closestPlayer = FindClosestPlayer();
         if (closestPlayer)
@@ -55,7 +59,9 @@ public class EnemyBehaviour : MonoBehaviour
                 distance = curDistance;
             }
         }
+
         return closest;
     }
 
+   
 }

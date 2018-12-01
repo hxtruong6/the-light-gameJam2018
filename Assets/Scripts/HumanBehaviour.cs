@@ -21,4 +21,18 @@ public class HumanBehaviour : MonoBehaviour
             transform.position = Vector3.SmoothDamp(transform.position, target, ref smoothVelocity, 0.5f);
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+
+        // TODO: Cant not collider
+        print("Other: " + other.name);
+        var enemy = other.gameObject.GetComponent<EnemyBehaviour>();
+        if (enemy)
+        {
+            Destroy(enemy);
+            Destroy(this.gameObject);
+        }
+
+    }
 }
