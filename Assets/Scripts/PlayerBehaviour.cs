@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour
@@ -14,9 +15,11 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] private GameObject humanPrefab;
     [HideInInspector] public List<GameObject> human = new List<GameObject>();
     [SerializeField] private Transform forwardPosition;
+    [SerializeField] private float thresholdDistance = 0.5f;
     private Rigidbody2D rb2d;
     Vector3 moveVelocity;
     private bool isDead;
+    private bool isFollowing;
 
 
     // Use this for initialization
@@ -31,6 +34,8 @@ public class PlayerBehaviour : MonoBehaviour
         {
             AddingHuman();
         }
+
+        isFollowing = false;
     }
 
     // Update is called once per frame
@@ -44,26 +49,63 @@ public class PlayerBehaviour : MonoBehaviour
         rb2d.transform.position += moveVelocity;
 
         // set the first human
-      
+
 
         if (moveVelocity != Vector3.zero)
         {
-            human[0].GetComponent<HumanBehaviour>().transform.position = rb2d.transform.position;
-            for (int i = 1; i < human.Count; i++)
-            {
-                human[i].GetComponent<HumanBehaviour>().Arriving(human[i-1].transform.position);
-            }
 
+            if (!isFollowing &&
+                Vector3.Distance(human[0].transform.position, transform.position) >= thresholdDistance)
+            {
+                var startPosition = human[0].GetComponent<HumanBehaviour>().transform.position;
+                human[0].GetComponent<HumanBehaviour>().transform.position = transform.position;
+                HumanFollowing(startPosition);
+            }
             float rot_z = Mathf.Atan2(moveInput.normalized.y, moveInput.normalized.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
         }
         if (Input.GetKeyDown(KeyCode.Space) || SimpleInput.GetButtonDown("Light"))
         {
             lightOn = !lightOn;
-            
+
         }
         PlayerStack.PlayerFear(numberHumanNotFear, maxFear);
         FlashLight(lightOn);
+    }
+
+    void HumanFollowing(Vector3 startPosition)
+    {
+        isFollowing = true;
+        Vector3 previousPosition = startPosition;
+        Vector3 tempPosition = Vector3.zero;
+        for (int i = 1; i < human.Count; i++)
+        {
+            if (Vector3.Distance(human[i].transform.position, previousPosition) >= thresholdDistance)
+            {
+                tempPosition = human[i].transform.position;
+                human[i].GetComponent<HumanBehaviour>().Arriving(previousPosition);
+                previousPosition = tempPosition;
+            }
+            else
+            {
+                 break;
+                
+            }
+        }
+        isFollowing = false;
+    }
+
+    private IEnumerator FollowingPlayer()
+    {
+        isFollowing = true;
+        for (int i = 1; i < human.Count; i++)
+        {
+            yield return new WaitUntil(() => Vector3.Distance(human[i].transform.position, human[i - 1].transform.position) >= thresholdDistance);
+            human[i].GetComponent<HumanBehaviour>().Arriving(human[i - 1].transform.position);
+
+        }
+
+        isFollowing = false;
     }
 
     private void FlashLight(bool lightOn)

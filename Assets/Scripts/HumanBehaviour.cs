@@ -8,6 +8,7 @@ public class HumanBehaviour : MonoBehaviour
     [SerializeField] private float maxForce;
 
     private Rigidbody2D rigid;
+    private float time = 0;
 
     // Use this for initialization
     void Start()
@@ -16,10 +17,22 @@ public class HumanBehaviour : MonoBehaviour
         gameObject.GetComponent<CircleCollider2D>().radius = circleColliderRadius;
     }
 
+    void Update()
+    {
+        //if (time > 2f)
+        //{
+        //    Arriving(GameObject.FindGameObjectWithTag("Player").transform.position);
+        //    time = 0;
+        //}
+
+        //time += Time.deltaTime;
+    }
 
     public void Arriving(Vector3 target)
     {
-        rigid.position = target;
+        print("Curr: " + transform.position + "|| target: " + target);
+        //rigid.position = target;
+        transform.position = target;
         return;
 
         Vector3 desired = (target - this.transform.position);
