@@ -106,12 +106,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemInside: {fileID: 0}
-  fadeDuration: 100000
+  fadeDuration: 5
   minSpawnObjectTime: 2.5
   maxSpawnObjectTime: 5
   spawnObjects:
-  - {fileID: 1306619489021596, guid: bd7ea237416a12441a3ec2249fe5038a, type: 2}
   - {fileID: 1499572717295356, guid: 807cc1e5f743a6f4c9e5994dba72dbe1, type: 2}
+  - {fileID: 1306619489021596, guid: bd7ea237416a12441a3ec2249fe5038a, type: 2}
   objectInside: {fileID: 0}
   reduceFactor: 0
   circleColliderRadius: 0.5

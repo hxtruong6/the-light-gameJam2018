@@ -572,7 +572,8 @@ Prefab:
       propertyPath: batteryValue
       value: 
       objectReference: {fileID: 1618803252}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114166897333728502, guid: 03140b0275b9fb747870b472f0c29fe1, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 03140b0275b9fb747870b472f0c29fe1, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &730345059 stripped

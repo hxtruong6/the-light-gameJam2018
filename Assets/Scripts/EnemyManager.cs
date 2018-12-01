@@ -11,11 +11,14 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private float thresholdDistanceObstacle;
     private bool enableSpawnEnemy = true;
     private float timeCount = 5;
+
+    private int countEnemy = 0;
     // Use this for initialization
     void Start()
     {
         instance = this;
         enableSpawnEnemy = true;
+        countEnemy = 0;
     }
 
     // Update is called once per frame
@@ -35,9 +38,14 @@ public class EnemyManager : MonoBehaviour
         var newPos = new Vector3(Random.Range(-radius, radius), Random.Range(-radius, radius), 0);
         //var rootPos = new Vector3(0, 0, 0);
         //TODO: check player position
+        countEnemy = 0;
+
         while (!isAvailblePosition(newPos))
         {
             newPos = new Vector3(Random.Range(-radius, radius), Random.Range(-radius, radius), 0);
+            countEnemy++;
+            print("Enemy: " + countEnemy);
+            if (countEnemy > 10) return;
         }
         var enemyClone = Instantiate(enemy, newPos, Quaternion.identity);
         enemyClone.transform.parent = this.transform;
