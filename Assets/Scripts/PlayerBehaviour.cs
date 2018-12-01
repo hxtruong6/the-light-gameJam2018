@@ -62,9 +62,18 @@ public class PlayerBehaviour : MonoBehaviour
 
         rb2d.transform.position += moveVelocity;
 
-        if (moveVelocity != Vector3.zero)
+        var xRotate = SimpleInput.GetAxis("HorizontalRotate");
+        var yRotate = SimpleInput.GetAxis("VerticalRotate");
+        Vector3 rotateInput = new Vector3(xRotate, yRotate, 0).normalized;
+        
+        if (moveVelocity != Vector3.zero && rotateInput * speed * Time.deltaTime == Vector3.zero)
         {
             float rot_z = Mathf.Atan2(moveInput.normalized.y, moveInput.normalized.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
+        }
+        else if (rotateInput * speed * Time.deltaTime != Vector3.zero)
+        {
+            float rot_z = Mathf.Atan2(rotateInput.normalized.y, rotateInput.normalized.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
         }
     }
