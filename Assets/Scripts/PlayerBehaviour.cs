@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour
@@ -25,9 +24,9 @@ public class PlayerBehaviour : MonoBehaviour
         var humInstantiate = Instantiate(humanPrefab, transform.position, transform.rotation, transform);
         humInstantiate.GetComponent<SpriteRenderer>().enabled = false;
         humans.Add(humInstantiate);
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 10; i++)
         {
-           AddNewFellows();
+            AddNewFellows();
         }
     }
 
@@ -45,6 +44,24 @@ public class PlayerBehaviour : MonoBehaviour
         humans.Add(humanInstantiate);
     }
 
+    public void CutMembers(HumanBehaviour human)
+    {
+        // Remove from this to the end of list
+        var index = this.humans.IndexOf(human);
+        for (int i = index + 1; i < humans.Count; i++)
+        {
+            humans[i].enabled = false;
+        }
+
+        humans.Remove(human);
+        //humans.RemoveRange(index, humans.Count - 1);
+    }
+
+    public void RemoveLastMember()
+    {
+        Destroy(humans[humans.Count - 1].gameObject);
+        humans.RemoveAt(humans.Count - 1);
+    }
     // Update is called once per frame
     private void Update()
     {
@@ -62,8 +79,8 @@ public class PlayerBehaviour : MonoBehaviour
 
         }
         PlayerStack.PlayerFear(numberHumanNotFear, maxFear);
-       
-        
+
+
         FlashLightToggle(lightOn);
         PlayerStack.PlayerFear(numberHumanNotFear, maxFear);
         if (PlayerStack.LifeFear())
@@ -94,7 +111,7 @@ public class PlayerBehaviour : MonoBehaviour
         {
             humans[i + 1].MoveToward(humans[i].transform.position);
         }
-   }
+    }
 
     private void FlashLightToggle(bool lightOn)
     {

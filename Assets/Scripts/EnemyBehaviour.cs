@@ -8,7 +8,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     [SerializeField] private float speed;
 
-    [SerializeField] private float circleColliderRadius;
+    [SerializeField] public float circleColliderRadius;
 
     private List<HumanBehaviour> humans = new List<HumanBehaviour>();
 
@@ -62,6 +62,7 @@ public class EnemyBehaviour : MonoBehaviour
 
         return closest;
     }
+   
 
    
 }

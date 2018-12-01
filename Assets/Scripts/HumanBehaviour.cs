@@ -24,14 +24,16 @@ public class HumanBehaviour : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-
         // TODO: Cant not collider
         print("Other: " + other.name);
         var enemy = other.gameObject.GetComponent<EnemyBehaviour>();
         if (enemy)
         {
-            Destroy(enemy);
-            Destroy(this.gameObject);
+            //GameObject.FindObjectOfType<PlayerBehaviour>().CutMembers(this);
+            //FindObjectOfType<PlayerBehaviour>().humans.Remove(this);
+            FindObjectOfType<PlayerBehaviour>().RemoveLastMember();
+            Destroy(enemy.gameObject);
+            //Destroy(this.gameObject);
         }
 
     }

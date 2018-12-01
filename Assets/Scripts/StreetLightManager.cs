@@ -34,7 +34,6 @@ public class StreetLightManager : MonoBehaviour
     {
         Vector3 newPos = Vector3.zero;
         newPos = new Vector3(Random.Range(-radius, radius), Random.Range(-radius, radius), 0);
-        bool validPosition = false;
         while (!isAvailblePosition(newPos))
         {
             newPos = new Vector3(Random.Range(-radius, radius), Random.Range(-radius, radius), 0);
@@ -43,18 +42,9 @@ public class StreetLightManager : MonoBehaviour
     }
     private bool isAvailblePosition(Vector3 pitvotPos)
     {
-
-        //Collider[]  hitColliders = Physics.OverlapSphere(pitvotPos, streetLight.GetComponent<StreetLight>().circleColliderRadius + thresholdDistanceObstacle);
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(pitvotPos.x, pitvotPos.y),
             streetLight.GetComponent<StreetLight>().circleColliderRadius + thresholdDistanceObstacle);
-        if (hitColliders.Length > 0)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        return hitColliders.Length == 0;
     }
 
 
