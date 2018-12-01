@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47ececfe2d1e80c4086c1cb9c9386583, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementThreshold: 0.5
+  movementThreshold: 0.8
   circleColliderRadius: 0.5
 --- !u!114 &114683993772565090
 MonoBehaviour:

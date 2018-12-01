@@ -10,7 +10,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     [SerializeField] public float circleColliderRadius;
 
-    private List<HumanBehaviour> humans = new List<HumanBehaviour>();
+    private List<GameObject> humans = new List<GameObject>();
 
     // Use this for initialization
     void Start()
@@ -23,6 +23,7 @@ public class EnemyBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.instance.IsGameOver()) return;
         // TODO: need to balance game at here
         // ...
 

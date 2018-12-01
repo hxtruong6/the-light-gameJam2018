@@ -50,6 +50,10 @@ public class StreetLight : MonoBehaviour
     {
         var randomIndex = Random.Range(0, spawnObjects.Length);
         var spawnObject = Instantiate(spawnObjects[randomIndex], transform);
+        if (spawnObject.GetComponent<HumanBehaviour>())
+        {
+            spawnObject.transform.SetParent(null);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)

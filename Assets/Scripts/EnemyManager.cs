@@ -9,6 +9,7 @@ public class EnemyManager : MonoBehaviour
     public List<GameObject> listEnemy = new List<GameObject>();
     public static EnemyManager instance;
     [SerializeField] private float thresholdDistanceObstacle;
+    [SerializeField] private int maxNumberEnemy;
     private bool enableSpawnEnemy = true;
     private float timeCount = 5;
 
@@ -21,10 +22,9 @@ public class EnemyManager : MonoBehaviour
         countEnemy = 0;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (listEnemy.Count > 10 || !enableSpawnEnemy) return;
+        if (listEnemy.Count > maxNumberEnemy || !enableSpawnEnemy) return;
         if (timeCount > 4.0f)
         {
             RandomEnemy();
@@ -44,7 +44,7 @@ public class EnemyManager : MonoBehaviour
         {
             newPos = new Vector3(Random.Range(-radius, radius), Random.Range(-radius, radius), 0);
             countEnemy++;
-            print("Enemy: " + countEnemy);
+            //print("Enemy: " + countEnemy);
             if (countEnemy > 10) return;
         }
         var enemyClone = Instantiate(enemy, newPos, Quaternion.identity);
@@ -61,12 +61,8 @@ public class EnemyManager : MonoBehaviour
 
     public void ClearAllEnemy()
     {
-        for (int i = 0; i < listEnemy.Count; i++)
-        {
-            Destroy(listEnemy[i].gameObject);
-        }
-        EnemyManager.instance.listEnemy.Clear();
         enableSpawnEnemy = false;
+        this.enabled = false;     
     }
 
 
