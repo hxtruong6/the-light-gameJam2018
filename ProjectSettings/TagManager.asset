@@ -56,6 +56,9 @@ TagManager:
   - name: LightGround
     uniqueID: 2034120597
     locked: 0
+  - name: Item
+    uniqueID: 1830614833
+    locked: 0
   - name: Player
     uniqueID: 474326341
     locked: 0

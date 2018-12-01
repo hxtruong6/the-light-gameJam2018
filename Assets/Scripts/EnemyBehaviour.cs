@@ -33,14 +33,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     public GameObject FindClosestPlayer()
     {
-        //var playerBehaviour = player.GetComponent<PlayerBehaviour>();
-        //List<GameObject> human = new List<GameObject>();
-        //if (!player.GetComponent<PlayerBehaviour>())
-        //{
-        //    print("No humans get");
-        //    return null;
-        //}
-        humans = player.GetComponent<PlayerBehaviour>().humans;
+        humans = player.GetComponent<PlayerParty>().humans;
         GameObject closest = null;
         float distance = Mathf.Infinity;
         Vector3 position = transform.position;

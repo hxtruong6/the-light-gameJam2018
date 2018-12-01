@@ -5,43 +5,22 @@ using UnityEngine;
 public class PlayerBehaviour : MonoBehaviour
 {
     public float speed;
-    public GameObject flashlight;
+    public GameObject flashLightObject;
     public bool lightOn;
-    public int maxBattery;
     public int maxFear;
     public int numberHumanNotFear;
 
-    [SerializeField] private HumanBehaviour humanPrefab;
-    [System.NonSerialized] public List<HumanBehaviour> humans = new List<HumanBehaviour>();
-    [SerializeField] private Transform forwardPosition;
+    [SerializeField] public Transform forwardPosition;
     private Rigidbody2D rb2d;
     private bool isDead;
-
+    private FlashLight flashLight;
+    private PlayerParty playerParty;
     // Use this for initialization
     private void Start()
     {
         rb2d = this.gameObject.GetComponent<Rigidbody2D>();
-
-        var humInstantiate = Instantiate(humanPrefab, transform.position, transform.rotation, transform);
-        humans.Add(humInstantiate);
-        //for (int i = 0; i < 4; i++)
-        //{
-        //    AddNewFellows();
-        //}
-    }
-
-    private void AddNewFellows()
-    {
-        float x = humans[humans.Count - 1].transform.position.x;
-        float y = humans[humans.Count - 1].transform.position.y;
-        float distance = humans[humans.Count - 1].circleColliderRadius * 2;
-
-        Vector3 directVec = forwardPosition.position - humans[humans.Count - 1].transform.position;
-        directVec = -directVec.normalized * distance;
-
-        Vector3 nextPosHuman = new Vector3(x, y, 0) + directVec;
-        var humanInstantiate = Instantiate(humanPrefab, nextPosHuman, Quaternion.identity);
-        humans.Add(humanInstantiate);
+        flashLight = GetComponent<FlashLight>();
+        playerParty = GetComponent<PlayerParty>();
     }
 
     // Update is called once per frame
@@ -54,27 +33,32 @@ public class PlayerBehaviour : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) || SimpleInput.GetButtonDown("Light"))
         {
-            if (PlayerStack.LifeBattery())
+            if (flashLight.LifeBattery())
             {
                 lightOn = !lightOn;
             }
 
         }
-        PlayerStack.PlayerFear(numberHumanNotFear, maxFear);
+        PlayerStack.instance.PlayerFear(numberHumanNotFear, maxFear);
        
         
         FlashLightToggle(lightOn);
-        PlayerStack.PlayerFear(numberHumanNotFear, maxFear);
+        PlayerStack.instance.PlayerFear(numberHumanNotFear, maxFear);
         if (PlayerStack.LifeFear())
         {
             Dead();
+        }
+
+        if(lightOn)
+        {
+            flashLight.PlayerBattery(flashLight.maxBattery);
         }
     }
 
     private void UpdateMovement()
     {
-        var xDir = SimpleInput.GetAxis("Horizontal") + Input.GetAxis("Horizontal");
-        var yDir = SimpleInput.GetAxis("Vertical") + Input.GetAxis("Vertical");
+        var xDir = SimpleInput.GetAxis("Horizontal") + Input.GetAxisRaw("Horizontal");
+        var yDir = SimpleInput.GetAxis("Vertical") + Input.GetAxisRaw("Vertical");
         Vector3 moveInput = new Vector3(xDir, yDir, 0).normalized;
         var moveVelocity = moveInput * speed * Time.deltaTime;
 
@@ -89,9 +73,9 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void UpdateFellowMovement()
     {
-        for (int i = 0; i < humans.Count - 1; i++)
+        for (int i = 0; i < playerParty.humans.Count - 1; i++)
         {
-            humans[i + 1].MoveToward(humans[i].transform.position);
+            playerParty.humans[i + 1].MoveToward(playerParty.humans[i].transform.position);
         }
    }
 
@@ -99,12 +83,16 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (lightOn)
         {
-            flashlight.gameObject.SetActive(true);
-            PlayerStack.PlayerBattery(maxBattery);
+            flashLightObject.gameObject.SetActive(true);       
         }
         else
         {
-            flashlight.gameObject.SetActive(false);
+            flashLightObject.gameObject.SetActive(false);
+            List<GameObject> enemies = EnemyManager.instance.listEnemy;
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                enemies[i].GetComponent<SpriteRenderer>().enabled = false;
+            }
         }
     }
 

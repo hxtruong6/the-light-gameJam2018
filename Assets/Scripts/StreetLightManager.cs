@@ -38,7 +38,7 @@ public class StreetLightManager : MonoBehaviour
         {
             newPos = new Vector3(Random.Range(-radius, radius), Random.Range(-radius, radius), 0);
             validPosition = true;
-            humans = player.GetComponent<PlayerBehaviour>().humans;
+            humans = player.GetComponent<PlayerParty>().humans;
 
             // Check not collision with human list
             for (int i = 0; i < humans.Count; i++)
