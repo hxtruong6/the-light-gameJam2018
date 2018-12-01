@@ -9,14 +9,22 @@ public class EnemyBehaviour : MonoBehaviour
     [SerializeField] private float speed;
 
     [SerializeField] public float circleColliderRadius;
+    [SerializeField] private float distanceWithLight;
 
     private List<GameObject> humans = new List<GameObject>();
+    private bool preventingTheLight;
+    private float timeCountDown;
+    private Vector3 prevStreetLigthCollider;
+
+
 
     // Use this for initialization
     void Start()
     {
         player = GameObject.FindObjectOfType<PlayerBehaviour>().gameObject;
         gameObject.GetComponent<CircleCollider2D>().radius = circleColliderRadius;
+        preventingTheLight = false;
+        timeCountDown = 3f;
     }
 
 
@@ -28,11 +36,36 @@ public class EnemyBehaviour : MonoBehaviour
         // ...
 
         // Find the nearest human
-        var closestPlayer = FindClosestPlayer();
-        if (closestPlayer)
+        if (preventingTheLight)
         {
-            transform.position = Vector2.MoveTowards(transform.position, closestPlayer.transform.position,
-                speed * Time.deltaTime);
+            // Moving the opposite with the light 
+            var desired_velocity = (this.transform.position - prevStreetLigthCollider).normalized * speed * Time.deltaTime;
+            //var veclocity2D = GetComponent<Rigidbody2D>().velocity;
+            //var steering = desired_velocity - new Vector3(veclocity2D.x, veclocity2D.y, 0);
+            //GetComponent<Rigidbody2D>().AddForce(steering);
+            transform.position += desired_velocity;
+
+            // Check 
+            if (Vector3.Distance(transform.position, prevStreetLigthCollider) >= distanceWithLight)
+            {
+                preventingTheLight = false;
+                // TODO: dont set hard code here
+                timeCountDown = 3f;
+
+            }
+        }
+        else if (timeCountDown > 0)
+        {
+            timeCountDown -= Time.deltaTime;
+        }
+        else
+        {
+            var closestPlayer = FindClosestPlayer();
+            if (closestPlayer)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, closestPlayer.transform.position,
+                    speed * Time.deltaTime);
+            }
         }
     }
 
@@ -64,11 +97,15 @@ public class EnemyBehaviour : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         // Handle end game
-        var mainPlayer = other.gameObject.GetComponent<PlayerBehaviour>();
-        if (mainPlayer)
+        if (other.GetComponent<StreetLight>())
+        {
+            preventingTheLight = true;
+            prevStreetLigthCollider = other.transform.position;
+        }
+        else if (other.GetComponent<PlayerBehaviour>())
         {
             EnemyManager.instance.ClearAllEnemy();
-            mainPlayer.GetComponent<PlayerBehaviour>().enabled = false;
+            other.GetComponent<PlayerBehaviour>().enabled = false;
             GameManager.instance.EndGame();
         }
 

@@ -27,7 +27,6 @@ public class PlayerParty : MonoBehaviour
             if (humans[humans.Count - 1].GetComponent<HumanBehaviour>())
             {
                 distance = humans[humans.Count - 1].GetComponent<HumanBehaviour>().circleColliderRadius * 2;
-
             }
             else
             {

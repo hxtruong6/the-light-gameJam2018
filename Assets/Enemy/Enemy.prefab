@@ -107,6 +107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1.5
   circleColliderRadius: 0.5
+  distanceWithLight: 4
 --- !u!212 &212191099020687900
 SpriteRenderer:
   m_ObjectHideFlags: 1

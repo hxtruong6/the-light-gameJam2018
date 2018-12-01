@@ -42,7 +42,7 @@ public class PlayerBehaviour : MonoBehaviour
         }
         FlashLightToggle(lightOn);
         PlayerStack.instance.PlayerFear(numberHumanNotFear, maxFear);
-        if (PlayerStack.LifeFear())
+        if (PlayerStack.ReachFearLimit())
         {
             GameManager.instance.EndGame();
         }
