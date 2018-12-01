@@ -47,23 +47,19 @@ public class PlayerBehaviour : MonoBehaviour
       
 
         if (moveVelocity != Vector3.zero)
-        {
-            human[0].GetComponent<HumanBehaviour>().transform.position = rb2d.transform.position;
-            for (int i = 1; i < human.Count; i++)
-            {
-                human[i].GetComponent<HumanBehaviour>().Arriving(human[i-1].transform.position);
-            }
-
+        {          
             float rot_z = Mathf.Atan2(moveInput.normalized.y, moveInput.normalized.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
         }
         if (Input.GetKeyDown(KeyCode.Space) || SimpleInput.GetButtonDown("Light"))
         {
-            lightOn = !lightOn;
+            if (PlayerStack.LifeBattery())
+                lightOn = !lightOn;
             
         }
         PlayerStack.PlayerFear(numberHumanNotFear, maxFear);
         FlashLight(lightOn);
+        if (PlayerStack.LifeFear()) Dead();
     }
 
     private void FlashLight(bool lightOn)
@@ -93,6 +89,11 @@ public class PlayerBehaviour : MonoBehaviour
         var humanInstantiate = Instantiate(humanPrefab, nextPosHuman, Quaternion.identity);
         humanInstantiate.transform.parent = this.transform;
         human.Add(humanInstantiate);
+    }
+
+    private void Dead()
+    {
+        isDead = true;
     }
 
 }

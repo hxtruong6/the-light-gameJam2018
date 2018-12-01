@@ -29,6 +29,8 @@ public class PlayerStack : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         batteryValue.fillAmount = currentBattery / player.GetComponent<PlayerBehaviour>().maxBattery;
+        LifeBattery();
+        LifeFear();
     }
 
     public static void PlayerFear(int numberHumanNotFear, int maxFear)
@@ -60,6 +62,30 @@ public class PlayerStack : MonoBehaviour {
                 playerStack.timerBattery = 2f;
             }
             else playerStack.timerBattery -= Time.deltaTime;
+        }
+    }
+
+    public static bool LifeBattery()
+    {
+        if (playerStack.currentBattery <= 0)
+        {
+            playerStack.player.GetComponent<PlayerBehaviour>().lightOn = false;
+            return false;
+        }
+        else return true;
+    }
+
+    public static bool LifeFear()
+    {
+        if (playerStack.currentFear >= playerStack.player.GetComponent<PlayerBehaviour>().maxFear) return true;
+        else return false;
+    }
+
+    public static void IncreaseBattery(int addBattery)
+    {
+        if (playerStack.currentBattery < playerStack.player.GetComponent<PlayerBehaviour>().maxBattery)
+        {
+            playerStack.currentBattery += addBattery;
         }
     }
 }

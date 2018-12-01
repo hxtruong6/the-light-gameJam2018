@@ -53,6 +53,9 @@ TagManager:
   - name: Enemy
     uniqueID: 2532818077
     locked: 0
+  - name: LightGround
+    uniqueID: 2034120597
+    locked: 0
   - name: Player
     uniqueID: 474326341
     locked: 0
