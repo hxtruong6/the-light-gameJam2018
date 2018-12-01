@@ -60,9 +60,10 @@ public class PlayerBehaviour : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) || SimpleInput.GetButtonDown("Light"))
         {
             lightOn = !lightOn;
-            FlashLight(lightOn);
+            
         }
         PlayerStack.PlayerFear(numberHumanNotFear, maxFear);
+        FlashLight(lightOn);
     }
 
     private void FlashLight(bool lightOn)

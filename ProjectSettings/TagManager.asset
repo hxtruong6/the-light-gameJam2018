@@ -41,3 +41,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Fog
+    uniqueID: 3419502755
+    locked: 0
+  - name: Shadow
+    uniqueID: 2626277803
+    locked: 0
+  - name: Light
+    uniqueID: 3547456243
+    locked: 0
+  - name: Enemy
+    uniqueID: 2532818077
+    locked: 0
+  - name: Player
+    uniqueID: 474326341
+    locked: 0
