@@ -16,13 +16,11 @@ public class ContactPlayer : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //print(collision.gameObject);
         if (collision.GetComponent<PlayerBehaviour>())
         {
             var player = collision.GetComponent<PlayerBehaviour>().gameObject;
             player.GetComponent<PlayerParty>().AddMember(gameObject);
             GetComponent<HumanBehaviour>().enabled = true;
         }
-        Destroy(this);
     }
 }

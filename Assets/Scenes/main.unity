@@ -520,6 +520,21 @@ Prefab:
       propertyPath: maxLightNumber
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 114002328906738882, guid: cbf17ace57c97524ca8b9df5000f3d6f,
+        type: 2}
+      propertyPath: radius
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 114346126160847618, guid: cbf17ace57c97524ca8b9df5000f3d6f,
+        type: 2}
+      propertyPath: radius
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 114002328906738882, guid: cbf17ace57c97524ca8b9df5000f3d6f,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cbf17ace57c97524ca8b9df5000f3d6f, type: 2}
   m_IsPrefabParent: 0
@@ -567,13 +582,12 @@ Prefab:
       propertyPath: batteryValue
       value: 
       objectReference: {fileID: 1618803252}
-    - target: {fileID: 114166897333728502, guid: 03140b0275b9fb747870b472f0c29fe1,
+    - target: {fileID: 58143707958261666, guid: 03140b0275b9fb747870b472f0c29fe1,
         type: 2}
-      propertyPath: batteryValue
-      value: 
-      objectReference: {fileID: 1618803252}
-    m_RemovedComponents:
-    - {fileID: 114166897333728502, guid: 03140b0275b9fb747870b472f0c29fe1, type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 03140b0275b9fb747870b472f0c29fe1, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &730345059 stripped

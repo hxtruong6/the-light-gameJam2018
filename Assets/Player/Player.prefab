@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4595248796400154}
   - component: {fileID: 198688326278814054}
   - component: {fileID: 199064468818490904}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TrailParticle (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 4622507626753024}
   - component: {fileID: 212771237558610406}
   - component: {fileID: 60579761669737748}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LightSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,8 +60,7 @@ GameObject:
   - component: {fileID: 58862484279452674}
   - component: {fileID: 114624636607231426}
   - component: {fileID: 58143707958261666}
-  - component: {fileID: 114166897333728502}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -76,7 +75,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4571413214621980}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ForwardPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +92,7 @@ GameObject:
   - component: {fileID: 4865844514850350}
   - component: {fileID: 198057479140127624}
   - component: {fileID: 199221129975002894}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LightParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,7 +109,7 @@ GameObject:
   - component: {fileID: 4764761758485890}
   - component: {fileID: 198408141032036772}
   - component: {fileID: 199657274348144678}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LightShadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,7 +127,7 @@ GameObject:
   - component: {fileID: 212517933638568090}
   - component: {fileID: 114189411159240934}
   - component: {fileID: 61496698746297938}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LightOut
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,7 +144,7 @@ GameObject:
   - component: {fileID: 4420965847880026}
   - component: {fileID: 198367673221053986}
   - component: {fileID: 199278091501681898}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ember
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -163,7 +162,7 @@ GameObject:
   - component: {fileID: 212491637217804536}
   - component: {fileID: 114365176730539052}
   - component: {fileID: 61958189890730002}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LightOut
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -180,7 +179,7 @@ GameObject:
   - component: {fileID: 4639524218532470}
   - component: {fileID: 198285482497688784}
   - component: {fileID: 199748511266306914}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TrailParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -335,7 +334,7 @@ Rigidbody2D:
   m_GameObject: {fileID: 1139158799293006}
   m_BodyType: 1
   m_Simulated: 1
-  m_UseFullKinematicContacts: 1
+  m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 0.28274336
   m_LinearDrag: 0
@@ -352,7 +351,7 @@ CircleCollider2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1139158799293006}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -486,20 +485,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.5, y: 3.5}
   m_EdgeRadius: 0
---- !u!114 &114166897333728502
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1139158799293006}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ed6f42d2ac079e478329c4de8a1db76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  batteryValue: {fileID: 0}
-  maxBattery: 50
-  damageBattery: 2
 --- !u!114 &114189411159240934
 MonoBehaviour:
   m_ObjectHideFlags: 1
