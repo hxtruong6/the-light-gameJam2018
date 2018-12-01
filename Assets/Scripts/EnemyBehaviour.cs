@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class EnemyBehaviour : MonoBehaviour
 {
@@ -8,10 +9,12 @@ public class EnemyBehaviour : MonoBehaviour
     [SerializeField] private float speed;
 
     [SerializeField] private float circleColliderRadius;
+
+    private List<HumanBehaviour> humans = new List<HumanBehaviour>();
     // Use this for initialization
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").gameObject;
+        player = GameObject.FindObjectOfType<PlayerBehaviour>().gameObject;
         gameObject.GetComponent<CircleCollider2D>().radius = circleColliderRadius;
     }
 
@@ -21,18 +24,29 @@ public class EnemyBehaviour : MonoBehaviour
     {
         // Find the nearest human
         var closestPlayer = FindClosestPlayer();
-        transform.position = Vector2.MoveTowards(transform.position, closestPlayer.transform.position, speed * Time.deltaTime);
+        if (closestPlayer)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, closestPlayer.transform.position,
+                speed * Time.deltaTime);
+        }
     }
 
     public GameObject FindClosestPlayer()
     {
-        var human = player.GetComponent<PlayerBehaviour>().human;
+        //var playerBehaviour = player.GetComponent<PlayerBehaviour>();
+        //List<GameObject> human = new List<GameObject>();
+        //if (!player.GetComponent<PlayerBehaviour>())
+        //{
+        //    print("No humans get");
+        //    return null;
+        //}
+        humans = player.GetComponent<PlayerBehaviour>().humans;
         GameObject closest = null;
         float distance = Mathf.Infinity;
         Vector3 position = transform.position;
-        for (int i = 0; i < human.Count; i++)
+        for (int i = 0; i < humans.Count; i++)
         {
-            var go = human[i];
+            var go = humans[i].gameObject;
             Vector3 diff = go.transform.position - position;
             float curDistance = diff.sqrMagnitude;
             if (curDistance < distance)
