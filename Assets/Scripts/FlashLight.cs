@@ -20,6 +20,11 @@ public class FlashLight : MonoBehaviour {
 	
 	void Update () {
         if (GameManager.instance.IsGameOver()) return;
+
+        if(currentBattery > 0 && GetComponent<PlayerBehaviour>().flashLightObject.activeSelf == false)
+        {
+            GetComponent<PlayerBehaviour>().flashLightObject.SetActive(true);
+        }
         batteryValue.fillAmount = currentBattery / maxBattery;
         LifeBattery();
     }

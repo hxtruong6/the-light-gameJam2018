@@ -58,7 +58,7 @@ MonoBehaviour:
   allEnemySpeed: 1.5
   radius: 20
   listEnemy: []
-  thresholdDistanceObstacle: 3
+  thresholdDistanceObstacle: 6
   maxNumberEnemy: 3
   timeBetweenSpawn: 4
   increaseEnemyCoolDown: 10
@@ -74,8 +74,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7867679ae737fa447a66028d76e629e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLightNumber: 5
-  radius: 20
+  maxLightNumber: 8
+  radius: 15
   thresholdDistanceObstacle: 4
   streetLightList:
   - {fileID: 1593124176351258, guid: fffae7457f0d6874e9c40a51dcdbb9a7, type: 2}
