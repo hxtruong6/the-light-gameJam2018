@@ -21,7 +21,7 @@ public class ScoreManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-		
+        
 	}
     
     IEnumerator CountScore()
@@ -32,11 +32,7 @@ public class ScoreManager : MonoBehaviour {
             playerScore += 10 + (2 * playerParty.humanCount);
             scoreText.text = playerScore.ToString();
             if (playerScore > PlayerPrefs.GetInt("HighScore", 0))
-            {
                 PlayerPrefs.SetInt("HighScore", playerScore);
-                //highScoreText.text = currentScore.ToString();
-            }
-​
         }
     }
 }

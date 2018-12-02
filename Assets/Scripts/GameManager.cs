@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public Text currentScore;
     public GameObject canvasGame;
     public GameObject canvasEnd;
     public bool isGameOver = false;
@@ -32,6 +33,7 @@ public class GameManager : MonoBehaviour
 
     public void EndGame()
     {
+        currentScore.text = ScoreManager.instance.playerScore.ToString();
         ScoreManager.instance.StopAllCoroutines();
         canvasGame.gameObject.SetActive(false);
         canvasEnd.gameObject.SetActive(true);
