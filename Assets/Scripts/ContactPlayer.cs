@@ -27,7 +27,7 @@ public class ContactPlayer : MonoBehaviour {
             isCalled = true;
 
             player.GetComponent<PlayerParty>().AddMember(gameObject);
-            GetComponent<HumanBehaviour>().underStreetLight.StartCoolDownSpawnItem();
+            //GetComponent<HumanBehaviour>().underStreetLight.StartCoolDownSpawnItem();
             GetComponent<HumanBehaviour>().enabled = true;
             
         }

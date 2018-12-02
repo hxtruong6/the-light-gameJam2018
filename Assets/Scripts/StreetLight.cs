@@ -27,11 +27,11 @@ public class StreetLight : MonoBehaviour
         isOccupied = true;
     }
 
-    public void StartCoolDownSpawnItem()
-    {
-        float randomTime = Random.Range(minSpawnObjectTime, maxSpawnObjectTime);
-        StartCoroutine(CoolDownSpawnItem(randomTime));
-    }
+    //public void StartCoolDownSpawnItem()
+    //{
+    //    float randomTime = Random.Range(minSpawnObjectTime, maxSpawnObjectTime);
+    //    StartCoroutine(CoolDownSpawnItem(randomTime));
+    //}
 
     IEnumerator CoolDownSpawnItem(float time)
     {

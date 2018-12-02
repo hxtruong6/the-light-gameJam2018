@@ -155,7 +155,7 @@ Transform:
   m_Children:
   - {fileID: 4818975654614782}
   m_Father: {fileID: 4615181449823512}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4613281594818092
 Transform:
@@ -181,8 +181,8 @@ Transform:
   m_LocalPosition: {x: 1.19, y: 0.86, z: -0.33965364}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4875961422867428}
   - {fileID: 4477573939919734}
+  - {fileID: 4875961422867428}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -225,7 +225,7 @@ Transform:
   m_Children:
   - {fileID: 4613281594818092}
   m_Father: {fileID: 4615181449823512}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &50463028523168700
 Rigidbody2D:
@@ -261,7 +261,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 1.5
 --- !u!114 &114423431927644154
 MonoBehaviour:
   m_ObjectHideFlags: 1

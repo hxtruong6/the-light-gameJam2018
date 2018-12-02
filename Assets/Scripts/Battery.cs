@@ -26,7 +26,7 @@ public class Battery : MonoBehaviour {
 
             var playerFlashLight = collision.GetComponent<PlayerBehaviour>().gameObject.GetComponent<FlashLight>();
             playerFlashLight.SetCurrentFlashLightBattery((int)(playerFlashLight.GetCurrentFlashLightBattery() + addBattery));
-            GetComponentInParent<StreetLight>().StartCoolDownSpawnItem();
+            //GetComponentInParent<StreetLight>().StartCoolDownSpawnItem();
             GetComponentInParent<StreetLight>().isOccupied = false;
             Destroy(gameObject);
         }

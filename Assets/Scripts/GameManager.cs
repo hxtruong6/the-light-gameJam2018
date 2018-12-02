@@ -49,9 +49,12 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < lights.Length; i++)
         {
-            lights[i].GetComponentInChildren<SpriteRenderer>().gameObject.SetActive(false);
+            if(lights[i].GetComponentInChildren<SpriteRenderer>())
+                lights[i].GetComponentInChildren<SpriteRenderer>().gameObject.SetActive(false);
         }
-        
+
+        FindObjectOfType<PlayerStack>().GetComponent<AudioSource>().enabled = false;
+
         playerLight.SetActive(false);
 
     }

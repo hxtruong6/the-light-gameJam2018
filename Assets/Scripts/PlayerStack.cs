@@ -8,6 +8,7 @@ public class PlayerStack : MonoBehaviour
     public Image fearValue;
     
     public GameObject player;
+    public GameObject panelFearDie;
     public static PlayerStack instance;
     
     private float currentFear;
@@ -39,6 +40,7 @@ public class PlayerStack : MonoBehaviour
     {
         if (GameManager.instance.IsGameOver()) return;
         ReachFearLimit();
+        AudioHeart(currentFear);
     }
 
     public void PlayerFear(int numberHumanNotFear, int maxFear)
@@ -64,13 +66,19 @@ public class PlayerStack : MonoBehaviour
     {
 
         if (instance.currentFear >= instance.player.GetComponent<PlayerBehaviour>().maxFear)
+        {
+            instance.panelFearDie.gameObject.SetActive(true);
             return true;
+        }
         else
             return false;
     }
 
     private void AudioHeart(float currentfear)
     {
+        if (GetComponent<AudioSource>().enabled == false)
+            return;
+
         audioSource.Play();
         audioSource.volume = currentFear / player.GetComponent<PlayerBehaviour>().maxFear;
         //audioSource.clip.
@@ -100,7 +108,7 @@ public class PlayerStack : MonoBehaviour
         }
 
 
-        if (!audioSource.isPlaying)
+        if (!audioSource.isPlaying && audioSource.isActiveAndEnabled)
         {
             audioSource.PlayOneShot(audioSource.clip);
         }

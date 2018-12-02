@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class CanvasCountStart : MonoBehaviour
 {
     public Text countDownText;
+    public GameObject splash;
     public GameObject canvasMainMenu;
     public GameObject canvasGame;
     public GameObject highScorePanel;
@@ -37,6 +38,7 @@ public class CanvasCountStart : MonoBehaviour
             if (currentCountDown == 0)
             {
                 canvasGame.gameObject.SetActive(true);
+                splash.gameObject.SetActive(false);
                 Time.timeScale = 1;
                 this.gameObject.SetActive(false);
             }

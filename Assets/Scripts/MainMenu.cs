@@ -35,5 +35,6 @@ public class MainMenu : MonoBehaviour {
     public void StartButtonGame()
     {
         countdownCanvas.gameObject.SetActive(true);
+        FindObjectOfType<PlayerStack>().gameObject.GetComponent<AudioSource>().enabled = true;
     }
 }
