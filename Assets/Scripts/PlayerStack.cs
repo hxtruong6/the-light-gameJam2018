@@ -14,6 +14,10 @@ public class PlayerStack : MonoBehaviour
 
     private float timerFear;
     PlayerParty playerParty;
+    public AudioClip h1;
+    public AudioClip h2;
+    public AudioClip h3;
+    private AudioSource audioSource;
 
     [SerializeField] private int damageFear = 6;
     [SerializeField] private float scareFactor = 0.3f;
@@ -25,7 +29,7 @@ public class PlayerStack : MonoBehaviour
 
     void Start()
     {
-        
+        audioSource = gameObject.GetComponent<AudioSource>();
         currentFear = 0;
         playerParty = FindObjectOfType<PlayerBehaviour>().GetComponent<PlayerParty>();
     }
@@ -35,6 +39,7 @@ public class PlayerStack : MonoBehaviour
     {
         if (GameManager.instance.IsGameOver()) return;
         LifeFear();
+        
     }
 
     public void PlayerFear(int numberHumanNotFear, int maxFear)
@@ -62,5 +67,42 @@ public class PlayerStack : MonoBehaviour
             return true;
         else
             return false;
+    }
+
+    private void AudioHeart(float currentfear)
+    {
+        audioSource.Play();
+        audioSource.volume = currentFear / player.GetComponent<PlayerBehaviour>().maxFear;
+        //audioSource.clip.
+        if ((currentFear / player.GetComponent<PlayerBehaviour>().maxFear ) < 0.3)
+        {
+            if (audioSource.clip != h1)
+            {
+                audioSource.Stop();
+                audioSource.clip = h1;
+            } 
+        }
+        else if ((currentFear / player.GetComponent<PlayerBehaviour>().maxFear) >= 0.8)
+        {
+            if (audioSource.clip != h3)
+            {
+                audioSource.Stop();
+                audioSource.clip = h3;
+            }
+        }
+        else
+        {
+            if (!audioSource.isPlaying && audioSource.clip != h2)
+            {
+                audioSource.Stop();
+                audioSource.clip = h2;
+            }
+        }
+
+
+        if (!audioSource.isPlaying)
+        {
+            audioSource.PlayOneShot(audioSource.clip);
+        }
     }
 }
