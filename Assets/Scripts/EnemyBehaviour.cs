@@ -6,17 +6,18 @@ public class EnemyBehaviour : MonoBehaviour
 
     private GameObject player;
 
-    [SerializeField] private float speed;
+    private float speed;
 
     [SerializeField] public float circleColliderRadius;
     [SerializeField] private float distanceWithLight;
 
-    private List<GameObject> humans = new List<GameObject>();
     private bool preventingTheLight;
     private float timeCountDown;
     private Vector3 prevStreetLigthCollider;
 
+    private List<GameObject> humans = new List<GameObject>();
 
+    public void SetSpeed(float newSpeed) { speed = newSpeed; }
 
     // Use this for initialization
     void Start()

@@ -6,10 +6,8 @@ public class StreetLightManager : MonoBehaviour
     public int maxLightNumber;
     [SerializeField] private GameObject streetLight;
     [SerializeField] private float radius = 5f;
-
-    [SerializeField] private GameObject player;
     [SerializeField] private float thresholdDistanceObstacle = 1.0f;
-
+    private GameObject player;
     private List<HumanBehaviour> humans = new List<HumanBehaviour>();
 
     private float timeCount = 5f;
@@ -19,6 +17,11 @@ public class StreetLightManager : MonoBehaviour
     void Start()
     {
         countLight = 0;
+        player = FindObjectOfType<PlayerBehaviour>().gameObject;
+        if (player == null)
+        {
+            print("Cannot find the player");
+        }
         StreetLightSpawn();
         StreetLightSpawn();
         StreetLightSpawn();
@@ -41,14 +44,13 @@ public class StreetLightManager : MonoBehaviour
         StreetLight[] lights = GameObject.FindObjectsOfType<StreetLight>();
         if (lights.Length >= maxLightNumber)
             return;
-        Vector3 newPos = Vector3.zero;
-        newPos = new Vector3(Random.Range(-radius, radius), Random.Range(-radius, radius), 0);
+        Vector3 newPos = new Vector3(Random.Range(-radius, radius), Random.Range(-radius, radius), 0) + player.transform.position;
         countLight = 0;
         while (!isAvailblePosition(newPos))
         {
             countLight++;
             //print("Light: " + countLight);
-            newPos = new Vector3(Random.Range(-radius, radius), Random.Range(-radius, radius), 0);
+            newPos = new Vector3(Random.Range(-radius, radius), Random.Range(-radius, radius), 0) + player.transform.position;
             if (countLight > 10) return;
         }
 

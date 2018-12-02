@@ -92,6 +92,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementThreshold: 0.8
   circleColliderRadius: 0.5
+  underStreetLight: {fileID: 0}
 --- !u!114 &114683993772565090
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -138,7 +139,7 @@ SpriteRenderer:
   m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d75f930b2536ed446b8504f8c61fb979, type: 3}
-  m_Color: {r: 0.48965526, g: 1, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0.15686275, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Battery : MonoBehaviour {
 
     public int addBattery = 20;
+    bool isCalled;
 
     void Start()
     {
@@ -19,9 +20,14 @@ public class Battery : MonoBehaviour {
     {
         if (collision.GetComponent<PlayerBehaviour>())
         {
+            if (isCalled)
+                return;
+            isCalled = true;
+
             var playerFlashLight = collision.GetComponent<PlayerBehaviour>().gameObject.GetComponent<FlashLight>();
             playerFlashLight.SetCurrentFlashLightBattery((int)(playerFlashLight.GetCurrentFlashLightBattery() + addBattery));
-            GetComponentInParent<StreetLight>().CoolDownSpawnObject();
+            GetComponentInParent<StreetLight>().StartCoolDownSpawnItem();
+            GetComponentInParent<StreetLight>().isOccupied = false;
             Destroy(gameObject);
         }
     }

@@ -15,12 +15,15 @@ public class PlayerBehaviour : MonoBehaviour
     private PlayerParty playerParty;
     public Vector3 moveVelocity = Vector3.zero;
 
+    private FollowPlayer followPlayer;
+
     // Use this for initialization
     private void Start()
     {
         rb2d = this.gameObject.GetComponent<Rigidbody2D>();
         flashLight = GetComponent<FlashLight>();
         playerParty = GetComponent<PlayerParty>();
+        followPlayer = FindObjectOfType<FollowPlayer>();
     }
 
 
@@ -60,11 +63,24 @@ public class PlayerBehaviour : MonoBehaviour
         Vector3 moveInput = new Vector3(xDir, yDir, 0).normalized;
         moveVelocity = moveInput * speed * Time.deltaTime;
 
-        rb2d.transform.position += moveVelocity;
+        var checkedPos = rb2d.transform.position + moveVelocity;
+        checkedPos.x = Mathf.Clamp(checkedPos.x, followPlayer.minX - followPlayer.thresholdClampX, followPlayer.maxX + followPlayer.thresholdClampX);
+        checkedPos.y = Mathf.Clamp(checkedPos.y, followPlayer.minY - followPlayer.thresholdClampY, followPlayer.maxY + followPlayer.thresholdClampY);
 
-        if (moveVelocity != Vector3.zero)
+        rb2d.transform.position = checkedPos;
+
+        var xRotate = SimpleInput.GetAxis("HorizontalRotate");
+        var yRotate = SimpleInput.GetAxis("VerticalRotate");
+        Vector3 rotateInput = new Vector3(xRotate, yRotate, 0).normalized;
+
+        if (moveVelocity != Vector3.zero && rotateInput * speed * Time.deltaTime == Vector3.zero)
         {
             float rot_z = Mathf.Atan2(moveInput.normalized.y, moveInput.normalized.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
+        }
+        else if (rotateInput * speed * Time.deltaTime != Vector3.zero)
+        {
+            float rot_z = Mathf.Atan2(rotateInput.normalized.y, rotateInput.normalized.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
         }
     }

@@ -1,18 +1,21 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerParty : MonoBehaviour
 {
     public int humanCount;
     public List<GameObject> humans = new List<GameObject>();
 
+    public int maxHumanInParty = 5;
+    public Text numberPartyText;
     [SerializeField] private HumanBehaviour humanPrefab;
 
     // Use this for initialization
     void Start()
     {
         humans.Add(this.gameObject);
-        //print("first human count: " + humans.Count);
+        numberPartyText.text = "1";
     }
 
     public void AddMember(GameObject party)
@@ -48,6 +51,7 @@ public class PlayerParty : MonoBehaviour
         party.transform.SetParent(null);
         humans.Add(party);
 
+        numberPartyText.text = humans.Count.ToString();
 
     }
     // Update is called once per frame

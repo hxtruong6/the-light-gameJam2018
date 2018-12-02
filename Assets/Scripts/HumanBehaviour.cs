@@ -6,6 +6,7 @@ public class HumanBehaviour : MonoBehaviour
     public float circleColliderRadius;
     private Rigidbody2D rigid;
     private Vector3 smoothVelocity;
+    [HideInInspector] public StreetLight underStreetLight;
 
     // Use this for initialization
     void Start()
@@ -24,14 +25,11 @@ public class HumanBehaviour : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // TODO: Cant not collider
-        //print("Other: " + other.name);
         var enemy = other.gameObject.GetComponent<EnemyBehaviour>();
         if (enemy)
         {
-            //GameObject.FindObjectOfType<PlayerBehaviour>().CutMembers(this);
-            //FindObjectOfType<PlayerBehaviour>().humans.Remove(this);
             FindObjectOfType<PlayerParty>().RemoveLastMember();
+            FindObjectOfType<PlayerParty>().numberPartyText.text = FindObjectOfType<PlayerParty>().humans.Count.ToString();
             EnemyManager.instance.listEnemy.Remove(enemy.gameObject);
             Destroy(enemy.gameObject);
 
