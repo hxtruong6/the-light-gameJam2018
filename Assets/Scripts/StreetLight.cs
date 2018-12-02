@@ -10,6 +10,7 @@ public class StreetLight : MonoBehaviour
     public bool isOccupied;
     [SerializeField] private float reduceFactor;
     [SerializeField] public float circleColliderRadius;
+    [SerializeField] public bool isStreetLightOneTime = false;
     private bool isInside;
     private Vector3 currentScale;  
     private float startTime;
@@ -29,6 +30,7 @@ public class StreetLight : MonoBehaviour
 
     public void StartCoolDownSpawnItem()
     {
+        if(isStreetLightOneTime) return;
         float randomTime = Random.Range(minSpawnObjectTime, maxSpawnObjectTime);
         StartCoroutine(CoolDownSpawnItem(randomTime));
     }

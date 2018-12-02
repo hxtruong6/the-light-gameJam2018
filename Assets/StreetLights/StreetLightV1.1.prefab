@@ -296,6 +296,7 @@ MonoBehaviour:
   isOccupied: 0
   reduceFactor: 0
   circleColliderRadius: 0.5
+  isStreetLightOneTime: 1
 --- !u!198 &198576946239420188
 ParticleSystem:
   m_ObjectHideFlags: 1

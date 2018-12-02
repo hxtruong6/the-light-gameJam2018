@@ -26,6 +26,16 @@ public class StreetLightManager : MonoBehaviour
     //            streetLightProbabilities.Add((float)1 / streetLightList.Count);
     //        }
     //    }
+    //}
+    //{
+    //    if (streetLightProbabilities.Count != streetLightList.Count)
+    //    {
+    //        streetLightProbabilities.Clear();
+    //        for (int i = 0; i < streetLightList.Count; i++)
+    //        {
+    //            streetLightProbabilities.Add((float)1 / streetLightList.Count);
+    //        }
+    //    }
     //    else
     //    {
     //        float sum = 0;
@@ -112,6 +122,7 @@ public class StreetLightManager : MonoBehaviour
     private int GetProbabilityIndex(List<float> probabilies)
     {
         float r = UnityEngine.Random.Range(0.0f, 1.0f);
+        if (probabilies.Count == 0) return -1;
         if (r < probabilies[0]) return 0;
         float currSum = probabilies[0];
         for (int i = 1; i < probabilies.Count - 1; i++)

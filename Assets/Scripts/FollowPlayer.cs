@@ -22,7 +22,7 @@ public class FollowPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.instance.IsGameOver())
+        if (GameManager.instance.IsGameOver() || !player)
             return;
 
         Vector3 newPos = player.transform.position + cameraOffset;

@@ -2084,6 +2084,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114346126160847618, guid: cbf17ace57c97524ca8b9df5000f3d6f,
+        type: 2}
+      propertyPath: streetLightProbabilities.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4214078877283358, guid: cbf17ace57c97524ca8b9df5000f3d6f, type: 2}
       propertyPath: m_LocalPosition.x
       value: -1.1781956
@@ -2149,12 +2154,12 @@ Prefab:
     - target: {fileID: 114346126160847618, guid: cbf17ace57c97524ca8b9df5000f3d6f,
         type: 2}
       propertyPath: streetLightProbabilities.Array.data[1]
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114346126160847618, guid: cbf17ace57c97524ca8b9df5000f3d6f,
         type: 2}
       propertyPath: streetLightProbabilities.Array.data[0]
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cbf17ace57c97524ca8b9df5000f3d6f, type: 2}
