@@ -3,19 +3,18 @@ using UnityEngine;
 
 public class StreetLight : MonoBehaviour
 {
-
-    public GameObject itemInside;
     public float fadeDuration = 5.0f;
     public float minSpawnObjectTime = 2.5f;
     public float maxSpawnObjectTime = 5f;
     public GameObject[] spawnObjects;
-    public GameObject objectInside;
+    public bool isOccupied;
     [SerializeField] private float reduceFactor;
     [SerializeField] public float circleColliderRadius;
     private bool isInside;
     private Vector3 currentScale;  
     private float startTime;
     private SpriteRenderer sprite;
+    private float timer;
     
 
     void Start()
@@ -25,17 +24,18 @@ public class StreetLight : MonoBehaviour
         currentScale = transform.localScale;
 
         SpawnObjectInside();
+        isOccupied = true;
     }
 
-    public void CoolDownSpawnObject()
+    public void StartCoolDownSpawnItem()
     {
-        var coolDownTime = Random.Range(minSpawnObjectTime, maxSpawnObjectTime);
-        StartCoroutine(SpawnObjectAfterCoolDown(coolDownTime));
+        float randomTime = Random.Range(minSpawnObjectTime, maxSpawnObjectTime);
+        StartCoroutine(CoolDownSpawnItem(randomTime));
     }
 
-    IEnumerator SpawnObjectAfterCoolDown(float cooldown)
+    IEnumerator CoolDownSpawnItem(float time)
     {
-        yield return new WaitForSeconds(cooldown);
+        yield return new WaitForSeconds(time);
         SpawnObjectInside();
     }
 
@@ -48,8 +48,15 @@ public class StreetLight : MonoBehaviour
 
     private void SpawnObjectInside()
     {
+        if (isOccupied == !isOccupied) return;
         var randomIndex = Random.Range(0, spawnObjects.Length);
         var spawnObject = Instantiate(spawnObjects[randomIndex], transform);
+        if (spawnObject.GetComponent<HumanBehaviour>())
+        {
+            spawnObject.transform.SetParent(null);
+            spawnObject.GetComponent<HumanBehaviour>().underStreetLight = this;
+        }
+        isOccupied = true;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

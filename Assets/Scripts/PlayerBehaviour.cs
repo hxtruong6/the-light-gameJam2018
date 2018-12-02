@@ -65,7 +65,7 @@ public class PlayerBehaviour : MonoBehaviour
         var xRotate = SimpleInput.GetAxis("HorizontalRotate");
         var yRotate = SimpleInput.GetAxis("VerticalRotate");
         Vector3 rotateInput = new Vector3(xRotate, yRotate, 0).normalized;
-        
+
         if (moveVelocity != Vector3.zero && rotateInput * speed * Time.deltaTime == Vector3.zero)
         {
             float rot_z = Mathf.Atan2(moveInput.normalized.y, moveInput.normalized.x) * Mathf.Rad2Deg;
@@ -83,7 +83,7 @@ public class PlayerBehaviour : MonoBehaviour
         if (playerParty.humans.Count == 0) return;
         for (int i = 0; i < playerParty.humans.Count - 1; i++)
         {
-            playerParty.humans[i + 1].MoveToward(playerParty.humans[i].transform.position);
+            playerParty.humans[i + 1].GetComponent<HumanBehaviour>().MoveToward(playerParty.humans[i].transform.position);
         }
     }
 
