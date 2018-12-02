@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 114578822192045312}
   - component: {fileID: 114002328906738882}
   - component: {fileID: 114346126160847618}
+  - component: {fileID: 114656727582118714}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -54,9 +55,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 1267189272405868, guid: 485e7502472ea2246aa2b8621ef1feb9, type: 2}
+  allEnemySpeed: 1.5
   radius: 20
   listEnemy: []
   thresholdDistanceObstacle: 3
+  maxNumberEnemy: 3
+  timeBetweenSpawn: 4
+  increaseEnemyCoolDown: 10
+  increaseEnemySpeedCoolDown: 20
 --- !u!114 &114346126160847618
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -69,10 +75,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxLightNumber: 5
-  streetLight: {fileID: 1593124176351258, guid: fffae7457f0d6874e9c40a51dcdbb9a7,
+  streetLight: {fileID: 1496642623378666, guid: cb823a4d6e1e6a14b85de81b6e957c76,
     type: 2}
   radius: 20
-  player: {fileID: 0}
   thresholdDistanceObstacle: 4
 --- !u!114 &114578822192045312
 MonoBehaviour:
@@ -85,6 +90,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e727d1c30201314880c864db9626743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentScore: {fileID: 0}
   canvasGame: {fileID: 0}
   canvasEnd: {fileID: 0}
   isGameOver: 0
+  fog: {fileID: 0}
+  playerLight: {fileID: 0}
+--- !u!114 &114656727582118714
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1755691586590286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cc539efd9fcaab4dbd0b83a2d55ccaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerScore: 0
+  scoreText: {fileID: 0}

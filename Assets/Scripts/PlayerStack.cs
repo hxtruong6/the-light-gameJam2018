@@ -38,8 +38,7 @@ public class PlayerStack : MonoBehaviour
     void Update()
     {
         if (GameManager.instance.IsGameOver()) return;
-        LifeFear();
-        
+        ReachFearLimit();
     }
 
     public void PlayerFear(int numberHumanNotFear, int maxFear)
@@ -61,8 +60,9 @@ public class PlayerStack : MonoBehaviour
         }
     } 
 
-    public static bool LifeFear()
+    public static bool ReachFearLimit()
     {
+
         if (instance.currentFear >= instance.player.GetComponent<PlayerBehaviour>().maxFear)
             return true;
         else

@@ -6,6 +6,7 @@ public class PlayerParty : MonoBehaviour
 {
     public int humanCount;
     public List<GameObject> humans = new List<GameObject>();
+
     public int maxHumanInParty = 5;
     public Text numberPartyText;
     [SerializeField] private HumanBehaviour humanPrefab;
@@ -15,7 +16,6 @@ public class PlayerParty : MonoBehaviour
     {
         humans.Add(this.gameObject);
         numberPartyText.text = "1";
-        //print("first human count: " + humans.Count);
     }
 
     public void AddMember(GameObject party)
@@ -30,7 +30,6 @@ public class PlayerParty : MonoBehaviour
             if (humans[humans.Count - 1].GetComponent<HumanBehaviour>())
             {
                 distance = humans[humans.Count - 1].GetComponent<HumanBehaviour>().circleColliderRadius * 2;
-
             }
             else
             {
@@ -51,6 +50,7 @@ public class PlayerParty : MonoBehaviour
         party.transform.position = nextPosHuman;
         party.transform.SetParent(null);
         humans.Add(party);
+
         numberPartyText.text = humans.Count.ToString();
 
     }

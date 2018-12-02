@@ -11,9 +11,13 @@ public class EnemyManager : MonoBehaviour
     public static EnemyManager instance;
     [SerializeField] private float thresholdDistanceObstacle;
     [SerializeField] private int maxNumberEnemy;
+
     [SerializeField] private float timeBetweenSpawn = 4f;
     [SerializeField] private float increaseEnemyCoolDown = 10f;
     [SerializeField] private float increaseEnemySpeedCoolDown = 20f;
+
+    private FollowPlayer followPlayer;
+    private GameObject player;
 
     private bool enableSpawnEnemy = true;
     private float timeCount = 5;
@@ -22,9 +26,11 @@ public class EnemyManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        followPlayer = FindObjectOfType<FollowPlayer>();
         instance = this;
         enableSpawnEnemy = true;
         countEnemy = 0;
+        player = FindObjectOfType<PlayerBehaviour>().gameObject;
         StartCoroutine(IncreaseEnemy(increaseEnemyCoolDown));
         StartCoroutine(IncreaseEnemySpeed(increaseEnemySpeedCoolDown));
     }
@@ -32,6 +38,7 @@ public class EnemyManager : MonoBehaviour
     void Update()
     {
         if (listEnemy.Count > maxNumberEnemy || !enableSpawnEnemy) return;
+
         if (timeCount > timeBetweenSpawn)
         {
             RandomEnemy();
@@ -65,19 +72,17 @@ public class EnemyManager : MonoBehaviour
 
     void RandomEnemy()
     {
-        var newPos = new Vector3(Random.Range(-radius, radius), Random.Range(-radius, radius), 0);
-        //var rootPos = new Vector3(0, 0, 0);
-        //TODO: check player position
+        var newPos = new Vector3(Random.Range(-radius, radius), Random.Range(-radius, radius), 0) + player.transform.position;
         countEnemy = 0;
 
         while (!isAvailblePosition(newPos))
         {
-            newPos = new Vector3(Random.Range(-radius, radius), Random.Range(-radius, radius), 0);
+            newPos = new Vector3(Random.Range(-radius, radius), Random.Range(-radius, radius), 0) + player.transform.position;
             countEnemy++;
             //print("Enemy: " + countEnemy);
             if (countEnemy > 10) return;
         }
-        var enemyClone = Instantiate(enemy, newPos, Quaternion.identity);
+        var enemyClone = Instantiate(enemy, newPos , Quaternion.identity);
         enemyClone.transform.parent = this.transform;
         enemyClone.GetComponent<EnemyBehaviour>().SetSpeed(allEnemySpeed);
         listEnemy.Add(enemyClone);
@@ -86,8 +91,8 @@ public class EnemyManager : MonoBehaviour
     private bool isAvailblePosition(Vector3 pitvotPos)
     {
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(pitvotPos.x, pitvotPos.y),
-            enemy.GetComponent<EnemyBehaviour>().circleColliderRadius + thresholdDistanceObstacle);
-        return hitColliders.Length == 0;
+            enemy.GetComponent<EnemyBehaviour>().circleColliderRadius + thresholdDistanceObstacle*1.5f);
+        return hitColliders.Length == 0 && (pitvotPos.x > followPlayer.minX && pitvotPos.x < followPlayer.maxX && pitvotPos.y > followPlayer.minY && pitvotPos.y < followPlayer.maxY);;
     }
 
     public void ClearAllEnemy()

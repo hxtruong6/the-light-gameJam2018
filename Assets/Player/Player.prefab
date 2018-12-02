@@ -44,7 +44,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1139158799293006
 GameObject:
   m_ObjectHideFlags: 0
@@ -517,6 +517,7 @@ MonoBehaviour:
   maxFear: 50
   numberHumanNotFear: 10
   forwardPosition: {fileID: 4571413214621980}
+  moveVelocity: {x: 0, y: 0, z: 0}
 --- !u!198 &198057479140127624
 ParticleSystem:
   m_ObjectHideFlags: 1

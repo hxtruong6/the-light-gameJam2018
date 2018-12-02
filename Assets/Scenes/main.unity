@@ -288,10 +288,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   smoothFactor: 1
-  maxY: 10.5
   minX: -15
   maxX: 15
   minY: -10.5
+  maxY: 10.5
+  thresholdClampX: 4
+  thresholdClampY: 2
 --- !u!81 &49029211
 AudioListener:
   m_ObjectHideFlags: 0
@@ -431,24 +433,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 73223019}
---- !u!1 &85714013 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1755691586590286, guid: cbf17ace57c97524ca8b9df5000f3d6f,
-    type: 2}
-  m_PrefabInternal: {fileID: 667558309}
---- !u!114 &85714014
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 85714013}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1cc539efd9fcaab4dbd0b83a2d55ccaa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerScore: 0
-  scoreText: {fileID: 1918882220}
 --- !u!114 &85714016 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114578822192045312, guid: cbf17ace57c97524ca8b9df5000f3d6f,
@@ -2132,11 +2116,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
-    - target: {fileID: 114346126160847618, guid: cbf17ace57c97524ca8b9df5000f3d6f,
+    - target: {fileID: 114656727582118714, guid: cbf17ace57c97524ca8b9df5000f3d6f,
         type: 2}
-      propertyPath: player
+      propertyPath: scoreText
       value: 
-      objectReference: {fileID: 730345059}
+      objectReference: {fileID: 1918882220}
+    - target: {fileID: 114578822192045312, guid: cbf17ace57c97524ca8b9df5000f3d6f,
+        type: 2}
+      propertyPath: currentScore
+      value: 
+      objectReference: {fileID: 91528415}
     - target: {fileID: 114578822192045312, guid: cbf17ace57c97524ca8b9df5000f3d6f,
         type: 2}
       propertyPath: canvasGame
@@ -2157,21 +2146,6 @@ Prefab:
       propertyPath: playerLight
       value: 
       objectReference: {fileID: 1109947876}
-    - target: {fileID: 114002328906738882, guid: cbf17ace57c97524ca8b9df5000f3d6f,
-        type: 2}
-      propertyPath: allEnemySpeed
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114002328906738882, guid: cbf17ace57c97524ca8b9df5000f3d6f,
-        type: 2}
-      propertyPath: maxNumberEnemy
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114578822192045312, guid: cbf17ace57c97524ca8b9df5000f3d6f,
-        type: 2}
-      propertyPath: currentScore
-      value: 
-      objectReference: {fileID: 91528415}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cbf17ace57c97524ca8b9df5000f3d6f, type: 2}
   m_IsPrefabParent: 0

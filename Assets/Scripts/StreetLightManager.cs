@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using UnityEngine;
 
 public class StreetLightManager : MonoBehaviour
@@ -6,19 +7,23 @@ public class StreetLightManager : MonoBehaviour
     public int maxLightNumber;
     [SerializeField] private GameObject streetLight;
     [SerializeField] private float radius = 5f;
-
-    [SerializeField] private GameObject player;
     [SerializeField] private float thresholdDistanceObstacle = 1.0f;
-
-    private List<HumanBehaviour> humans = new List<HumanBehaviour>();
+    private GameObject player;
 
     private float timeCount = 5f;
+    private FollowPlayer followPlayer;
 
     private int countLight = 0;
     // Use this for initialization
     void Start()
     {
+        followPlayer = FindObjectOfType<FollowPlayer>();
         countLight = 0;
+        player = FindObjectOfType<PlayerBehaviour>().gameObject;
+        if (player == null)
+        {
+            print("Cannot find the player");
+        }
         StreetLightSpawn();
         StreetLightSpawn();
         StreetLightSpawn();
@@ -41,14 +46,13 @@ public class StreetLightManager : MonoBehaviour
         StreetLight[] lights = GameObject.FindObjectsOfType<StreetLight>();
         if (lights.Length >= maxLightNumber)
             return;
-        Vector3 newPos = Vector3.zero;
-        newPos = new Vector3(Random.Range(-radius, radius), Random.Range(-radius, radius), 0);
+        Vector3 newPos = new Vector3(Random.Range(-radius, radius), Random.Range(-radius, radius), 0) + player.transform.position;
         countLight = 0;
         while (!isAvailblePosition(newPos))
         {
             countLight++;
             //print("Light: " + countLight);
-            newPos = new Vector3(Random.Range(-radius, radius), Random.Range(-radius, radius), 0);
+            newPos = new Vector3(Random.Range(-radius, radius), Random.Range(-radius, radius), 0) + player.transform.position;
             if (countLight > 10) return;
         }
 
@@ -58,7 +62,8 @@ public class StreetLightManager : MonoBehaviour
     {
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(pitvotPos.x, pitvotPos.y),
             streetLight.GetComponent<StreetLight>().circleColliderRadius + thresholdDistanceObstacle);
-        return hitColliders.Length == 0;
+
+        return hitColliders.Length == 0 && (pitvotPos.x > followPlayer.minX && pitvotPos.x < followPlayer.maxX && pitvotPos.y > followPlayer.minY && pitvotPos.y < followPlayer.maxY);
     }
 
 

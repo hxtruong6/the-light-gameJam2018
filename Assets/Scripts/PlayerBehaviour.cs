@@ -12,7 +12,10 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] public Transform forwardPosition;
     private Rigidbody2D rb2d;
     private FlashLight flashLight;
-    private PlayerParty playerParty ;
+    private PlayerParty playerParty;
+    public Vector3 moveVelocity = Vector3.zero;
+
+    private FollowPlayer followPlayer;
 
     // Use this for initialization
     private void Start()
@@ -20,10 +23,10 @@ public class PlayerBehaviour : MonoBehaviour
         rb2d = this.gameObject.GetComponent<Rigidbody2D>();
         flashLight = GetComponent<FlashLight>();
         playerParty = GetComponent<PlayerParty>();
-
+        followPlayer = FindObjectOfType<FollowPlayer>();
     }
 
-  
+
 
     // Update is called once per frame
     private void Update()
@@ -42,12 +45,12 @@ public class PlayerBehaviour : MonoBehaviour
         }
         FlashLightToggle(lightOn);
         PlayerStack.instance.PlayerFear(numberHumanNotFear, maxFear);
-        if (PlayerStack.LifeFear())
+        if (PlayerStack.ReachFearLimit())
         {
             GameManager.instance.EndGame();
         }
 
-        if(lightOn)
+        if (lightOn)
         {
             flashLight.PlayerBattery(flashLight.maxBattery);
         }
@@ -58,9 +61,13 @@ public class PlayerBehaviour : MonoBehaviour
         var xDir = SimpleInput.GetAxis("Horizontal") + Input.GetAxisRaw("Horizontal");
         var yDir = SimpleInput.GetAxis("Vertical") + Input.GetAxisRaw("Vertical");
         Vector3 moveInput = new Vector3(xDir, yDir, 0).normalized;
-        var moveVelocity = moveInput * speed * Time.deltaTime;
+        moveVelocity = moveInput * speed * Time.deltaTime;
 
-        rb2d.transform.position += moveVelocity;
+        var checkedPos = rb2d.transform.position + moveVelocity;
+        checkedPos.x = Mathf.Clamp(checkedPos.x, followPlayer.minX - followPlayer.thresholdClampX, followPlayer.maxX + followPlayer.thresholdClampX);
+        checkedPos.y = Mathf.Clamp(checkedPos.y, followPlayer.minY - followPlayer.thresholdClampY, followPlayer.maxY + followPlayer.thresholdClampY);
+
+        rb2d.transform.position = checkedPos;
 
         var xRotate = SimpleInput.GetAxis("HorizontalRotate");
         var yRotate = SimpleInput.GetAxis("VerticalRotate");
@@ -91,13 +98,13 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (lightOn)
         {
-            flashLightObject.gameObject.SetActive(true);       
+            flashLightObject.gameObject.SetActive(true);
         }
         else
         {
             flashLightObject.gameObject.SetActive(false);
             List<GameObject> enemies = EnemyManager.instance.listEnemy;
-            if(enemies.Count > 0)
+            if (enemies.Count > 0)
             {
                 for (int i = 0; i < enemies.Count; i++)
                 {

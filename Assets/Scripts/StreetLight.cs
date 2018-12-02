@@ -54,6 +54,7 @@ public class StreetLight : MonoBehaviour
         if (spawnObject.GetComponent<HumanBehaviour>())
         {
             spawnObject.transform.SetParent(null);
+
             spawnObject.GetComponent<HumanBehaviour>().underStreetLight = this;
         }
         isOccupied = true;
@@ -65,7 +66,7 @@ public class StreetLight : MonoBehaviour
         {
             startTime = Time.time;
             isInside = true;
-            StartCoroutine(ScaleDown());
+            //StartCoroutine(ScaleDown());
         }
     }
 
@@ -74,7 +75,7 @@ public class StreetLight : MonoBehaviour
         if (other.GetComponent<PlayerBehaviour>())
         {
             isInside = false;
-            StopCoroutine(ScaleDown());
+            //StopCoroutine(ScaleDown());
         }
     }
 
