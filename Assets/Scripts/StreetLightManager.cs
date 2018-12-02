@@ -9,7 +9,6 @@ public class StreetLightManager : MonoBehaviour
     [SerializeField] private float radius = 5f;
     [SerializeField] private float thresholdDistanceObstacle = 1.0f;
     private GameObject player;
-    private List<HumanBehaviour> humans = new List<HumanBehaviour>();
 
     private float timeCount = 5f;
     private FollowPlayer followPlayer;
