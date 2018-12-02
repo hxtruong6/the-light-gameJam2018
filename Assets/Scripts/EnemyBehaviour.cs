@@ -10,7 +10,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     [SerializeField] public float circleColliderRadius;
     [SerializeField] private float distanceWithLight;
-
+    [SerializeField] private float seekTheLeaderProbability = 0.2f;
     private bool preventingTheLight;
     private float timeCountDown;
     private Vector3 prevStreetLigthCollider;
@@ -36,14 +36,12 @@ public class EnemyBehaviour : MonoBehaviour
         // TODO: need to balance game at here
         // ...
 
+
         // Find the nearest human
         if (preventingTheLight)
         {
             // Moving the opposite with the light 
             var desired_velocity = (this.transform.position - prevStreetLigthCollider).normalized * speed * Time.deltaTime;
-            //var veclocity2D = GetComponent<Rigidbody2D>().velocity;
-            //var steering = desired_velocity - new Vector3(veclocity2D.x, veclocity2D.y, 0);
-            //GetComponent<Rigidbody2D>().AddForce(steering);
             transform.position += desired_velocity;
 
             // Check 
@@ -73,6 +71,12 @@ public class EnemyBehaviour : MonoBehaviour
     public GameObject FindClosestPlayer()
     {
         humans = player.GetComponent<PlayerParty>().humans;
+        var r = Random.Range(0, 1);
+        if (r < seekTheLeaderProbability)
+        {
+            return humans[0];
+        }
+
         GameObject closest = null;
         float distance = Mathf.Infinity;
         Vector3 position = transform.position;

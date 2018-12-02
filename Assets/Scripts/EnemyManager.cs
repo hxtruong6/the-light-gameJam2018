@@ -16,6 +16,7 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private float increaseEnemyCoolDown = 10f;
     [SerializeField] private float increaseEnemySpeedCoolDown = 20f;
 
+    private FollowPlayer followPlayer;
     private GameObject player;
 
     private bool enableSpawnEnemy = true;
@@ -25,6 +26,7 @@ public class EnemyManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        followPlayer = FindObjectOfType<FollowPlayer>();
         instance = this;
         enableSpawnEnemy = true;
         countEnemy = 0;
@@ -90,7 +92,7 @@ public class EnemyManager : MonoBehaviour
     {
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(pitvotPos.x, pitvotPos.y),
             enemy.GetComponent<EnemyBehaviour>().circleColliderRadius + thresholdDistanceObstacle*1.5f);
-        return hitColliders.Length == 0;
+        return hitColliders.Length == 0 && (pitvotPos.x > followPlayer.minX && pitvotPos.x < followPlayer.maxX && pitvotPos.y > followPlayer.minY && pitvotPos.y < followPlayer.maxY);;
     }
 
     public void ClearAllEnemy()

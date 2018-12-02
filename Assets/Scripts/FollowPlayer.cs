@@ -2,6 +2,7 @@
 
 public class FollowPlayer : MonoBehaviour
 {
+    // TODO: This class need to be a static class 
     private Vector3 cameraOffset;
 
     [Range(0.01f, 1.0f)]

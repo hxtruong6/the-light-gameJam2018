@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using UnityEngine;
 
 public class StreetLightManager : MonoBehaviour
@@ -11,11 +12,13 @@ public class StreetLightManager : MonoBehaviour
     private List<HumanBehaviour> humans = new List<HumanBehaviour>();
 
     private float timeCount = 5f;
+    private FollowPlayer followPlayer;
 
     private int countLight = 0;
     // Use this for initialization
     void Start()
     {
+        followPlayer = FindObjectOfType<FollowPlayer>();
         countLight = 0;
         player = FindObjectOfType<PlayerBehaviour>().gameObject;
         if (player == null)
@@ -60,7 +63,8 @@ public class StreetLightManager : MonoBehaviour
     {
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(pitvotPos.x, pitvotPos.y),
             streetLight.GetComponent<StreetLight>().circleColliderRadius + thresholdDistanceObstacle);
-        return hitColliders.Length == 0;
+
+        return hitColliders.Length == 0 && (pitvotPos.x > followPlayer.minX && pitvotPos.x < followPlayer.maxX && pitvotPos.y > followPlayer.minY && pitvotPos.y < followPlayer.maxY);
     }
 
 
