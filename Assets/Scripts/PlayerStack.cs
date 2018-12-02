@@ -6,11 +6,11 @@ using UnityEngine.UI;
 public class PlayerStack : MonoBehaviour
 {
     public Image fearValue;
-    
+
     public GameObject player;
     public GameObject panelFearDie;
     public static PlayerStack instance;
-    
+
     private float currentFear;
 
     private float timerFear;
@@ -60,11 +60,12 @@ public class PlayerStack : MonoBehaviour
                     instance.timerFear -= Time.deltaTime;
             }
         }
-    } 
+    }
 
     public static bool ReachFearLimit()
     {
-
+        if (instance.player.GetComponent<PlayerBehaviour>() == null)
+            return false;
         if (instance.currentFear >= instance.player.GetComponent<PlayerBehaviour>().maxFear)
         {
             instance.panelFearDie.gameObject.SetActive(true);
@@ -82,13 +83,13 @@ public class PlayerStack : MonoBehaviour
         audioSource.Play();
         audioSource.volume = currentFear / player.GetComponent<PlayerBehaviour>().maxFear;
         //audioSource.clip.
-        if ((currentFear / player.GetComponent<PlayerBehaviour>().maxFear ) < 0.3)
+        if ((currentFear / player.GetComponent<PlayerBehaviour>().maxFear) < 0.3)
         {
             if (audioSource.clip != h1)
             {
                 audioSource.Stop();
                 audioSource.clip = h1;
-            } 
+            }
         }
         else if ((currentFear / player.GetComponent<PlayerBehaviour>().maxFear) >= 0.8)
         {

@@ -169,7 +169,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1.5
+  m_Radius: 0.5
 --- !u!114 &114678339504449138
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -190,6 +190,7 @@ MonoBehaviour:
   isOccupied: 0
   reduceFactor: 0
   circleColliderRadius: 0.5
+  isStreetLightOneTime: 0
 --- !u!198 &198654046275909080
 ParticleSystem:
   m_ObjectHideFlags: 1

@@ -26,7 +26,7 @@ public class StreetLightScaleDown : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        print("on street light scale down: " + other.name);
+        //print("on street light scale down: " + other.name);
         if (other.GetComponent<PlayerBehaviour>())
         {
             if (!isPlayingEndParticle)

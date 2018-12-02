@@ -75,10 +75,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxLightNumber: 5
-  streetLight: {fileID: 1496642623378666, guid: cb823a4d6e1e6a14b85de81b6e957c76,
-    type: 2}
   radius: 20
   thresholdDistanceObstacle: 4
+  streetLightList:
+  - {fileID: 1593124176351258, guid: fffae7457f0d6874e9c40a51dcdbb9a7, type: 2}
+  - {fileID: 1496642623378666, guid: cb823a4d6e1e6a14b85de81b6e957c76, type: 2}
+  streetLightProbabilities:
+  - 0.3
+  - 0.7
 --- !u!114 &114578822192045312
 MonoBehaviour:
   m_ObjectHideFlags: 1
